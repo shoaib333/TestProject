@@ -51,7 +51,11 @@ public class BackgroundServiceBTService extends Service {
         } else {
             if (!mBluetoothAdapter.isEnabled()) {
                 Context context = getApplicationContext();
-                CharSequence text = "Bluetooth is not enabled";
+                CharSequence text = "Bluetooth is not enabled, turning it ON";
+
+                //Enable Bluetooth Adaptor if it is OFF
+                mBluetoothAdapter.enable();
+
                 int duration = Toast.LENGTH_SHORT;
 
                 Toast toast = Toast.makeText(context, text, duration);
