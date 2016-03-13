@@ -1,4 +1,9 @@
 <resources>
-    <string name="app_name">helloAndroid</string>
+    <string name="app_name">ideaMeter</string>
     <string name="action_settings">Settings</string>
+    <string name="show_map_string">Open Map</string>
+    <string name="open_bt_string">Start Bluetooth</string>
+    <string name="recieve_sms_string">Allow SMS</string>
+    <string name="location_string">Enter Location</string>
+    <string name="title_activity_maps">Meter Maps</string>
 </resources>
