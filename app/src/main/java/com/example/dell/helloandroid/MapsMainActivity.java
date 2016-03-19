@@ -47,7 +47,7 @@ public class MapsMainActivity extends Activity{
         final Button map_button = (Button) findViewById(R.id.mapButton);
 
 		final Button BT_button = (Button) findViewById(R.id.btButton);
-		
+
         map_button.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {

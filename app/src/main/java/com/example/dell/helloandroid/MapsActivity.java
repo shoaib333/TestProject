@@ -1,12 +1,22 @@
 package com.example.dell.helloandroid;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -29,25 +39,78 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener,
+        LocationListener {
+    public static final String TAG = MapsActivity.class.getSimpleName(); /* TAG for Debug Messages */
 
-    private GoogleMap mMap;
+    private GoogleMap mMap; /* Map object */
+    private GoogleApiClient mGoogleApiClient; /* Location Services object */
     private ArrayList<LatLng> markerPoints;
+    private List<HashMap<String, String>> path;
+
+
+    private static final long ONE_MIN = 1000 * 60;
+    private static final long TWO_MIN = ONE_MIN * 2;
+    private static final long FIVE_MIN = ONE_MIN * 5;
+    private static final long MEASURE_TIME = 1000 * 30;
+    private static final long POLLING_FREQ = 1000 * 1;
+    private static final long FASTES_UPDATE_FREQ = 1000 * 1;
+    private static final float MIN_ACCURACY = 25.0f;
+    private static final float MIN_LAST_READ_ACCURACY = 500.0f;
+
+    // Define an object that holds accuracy and frequency parameters
+    private LocationRequest mLocationRequest;
+
+    private Location mCurrentLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        /* Check if Google Play Services are available */
+        if(!servicesAvailable())
+            finish();
+
+        /* Configure the Layout of the Map Activity */
         setContentView(R.layout.activity_maps);
+
+
+        // Create and define the LocationRequest
+        mLocationRequest = LocationRequest.create();
+
+        // Use high accuracy
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+        // Update every 10 seconds
+        mLocationRequest.setInterval(POLLING_FREQ);
+
+        // Recieve updates no more often than every 2 seconds
+        mLocationRequest.setFastestInterval(FASTES_UPDATE_FREQ);
+
+        /* Configure GooglePlayServices */
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .addApi(AppIndex.API).build();
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+
         mapFragment.getMapAsync(this);
+
     }
 
 
 protected void onStart(Bundle savedInstanceState){
     // Wait for Fragment to start
+    super.onStart();
 
+    /* Connect with Google Services */
+    mGoogleApiClient.connect();
 
 }
     /**
@@ -65,6 +128,22 @@ protected void onStart(Bundle savedInstanceState){
         markerPoints = new ArrayList<LatLng>();
 
         mMap = googleMap;
+        LatLng currentLoc;
+
+        if (true) {
+
+            currentLoc = new LatLng(31.31549772, 74.343611); /* Current Location Lahore */
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLoc));
+            mMap.moveCamera(CameraUpdateFactory.zoomBy(5));    /* Zoom to City */
+        }
+
+        else {
+
+            currentLoc = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLoc));
+            mMap.moveCamera(CameraUpdateFactory.zoomBy(8));    /* Zoom to Streets */
+        }
+
 
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
@@ -266,7 +345,7 @@ protected void onStart(Bundle savedInstanceState){
                     lineOptions = new PolylineOptions();
 
                     // Fetching i-th route
-                    List<HashMap<String, String>> path = result.get(i);
+                    path = result.get(i);
 
                     // Fetching all the points in i-th route
                     for(int j=0;j<path.size();j++){
@@ -295,5 +374,96 @@ protected void onStart(Bundle savedInstanceState){
             }
         }
     } /* Class Download Task end */
-    
+
+    /* Returns all of the current Path, The getter will handle the difference between LatLng and
+    *  direction HashMaps */
+
+    public List<HashMap<String, String>> getPath(){
+        return path;
+    } /* getPath end */
+
+
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+
+        /* Disconnect from Google Play Services */
+        mGoogleApiClient.disconnect();
+    }
+
+    /* Called whenever Location of the device is changed */
+    @Override
+    public void onLocationChanged(Location location){
+
+        handleNewLocation(location);
+    }
+
+    private void handleNewLocation(Location location) {
+        Log.d(TAG, location.toString());
+        mCurrentLocation = location;
+        setUpMapLoc(mCurrentLocation);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mGoogleApiClient.isConnected()) {
+//            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+            mGoogleApiClient.disconnect();
+        }
+    }
+
+    @Override
+    public void onConnected(Bundle dataBundle) {
+
+        // Get first reading. Get additional location updates if necessary
+
+        Log.i(TAG, "Location Service Connected. Congrats");
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+            if (location == null) {
+
+            } else {
+                handleNewLocation(location);
+            }
+        }
+    }
+
+
+    /* Called Whenever Location Service is Suspended */
+    @Override
+    public void onConnectionSuspended(int i) {
+        Log.i(TAG, "Location Service Suspended. Please Reconnect");
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.i(TAG, "Connection Failed. Try again later.");
+    }
+
+    private boolean servicesAvailable() {
+
+        // Check that Google Play Services are available
+        int resultCode = GooglePlayServicesUtil
+                .isGooglePlayServicesAvailable(this);
+
+        // If Google Play services is available
+
+        return (ConnectionResult.SUCCESS == resultCode);
+
+    }
+
+    /* Updated Whenever Location is updated */
+    private LatLng setUpMapLoc(Location location){
+        double currentLatitude = location.getLatitude();
+        double currentLongitude = location.getLongitude();
+
+        LatLng latLng = new LatLng(currentLatitude, currentLongitude);
+
+        return latLng;
+    }
+
+
 } /* Class Maps Activity end */
