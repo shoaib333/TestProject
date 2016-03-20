@@ -112,21 +112,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-
-    public void ConnectThread(String deviceID, Handler handler) {
-        mDevice = mBluetoothAdapter.getRemoteDevice(deviceID);
-        mHandler = handler;
-        try {
-            /* Try to connect with */
-            mBluetoothSocket = mDevice
-                    .createRfcommSocketToServiceRecord(showBTdevices.APP_UUID);
-
-        } catch (IOException e) {
-
-            e.printStackTrace();
-        }
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -165,6 +150,12 @@ public class MainActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case SOCKET_CONNECTED: {
+
+                    Context context = getBaseContext();
+
+                    data = "Device Connected to: " + msg.obj.toString();
+                    Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
+
                     mBluetoothConnection = (BTConnectionThread) msg.obj;
                     mBluetoothConnection.write("this is a message".getBytes());
                     break;
@@ -172,7 +163,9 @@ public class MainActivity extends AppCompatActivity {
                 case DATA_RECEIVED: {
                     Context context = getBaseContext();
 
-                    data = (String) msg.obj;
+                    data = msg.obj.toString();
+
+                    /* TODO: -----------------> Add processing here that what is to be done of this recieved data <-------------- */
                     Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
 
                     mBluetoothConnection.write(data.getBytes());
