@@ -55,12 +55,19 @@ public class BTConnectionThread extends Thread {
         while (true) {
             try {
 
-                /* Read input stream for data recieved */
-                bytes = mInStream.read(buffer);
-                String data = new String(buffer, 0, bytes);
+                int availabledata = mInStream.available();
 
-                /* Return this recieved data back to the Calling Activity */
-                mHandler.obtainMessage(MainActivity.DATA_RECEIVED,data).sendToTarget();
+                /* If Input data is available */
+                if (availabledata > 0)
+                {
+
+                    /* Read input stream for data recieved */
+                    bytes = mInStream.read(buffer);
+                    String data = new String(buffer, 0, bytes);
+
+                    /* Return this recieved data back to the Calling Activity */
+                    mHandler.obtainMessage(MainActivity.DATA_RECEIVED,data).sendToTarget();
+                }
 
             } catch (IOException e) {
 

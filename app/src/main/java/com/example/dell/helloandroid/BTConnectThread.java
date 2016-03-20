@@ -53,10 +53,10 @@ public BTConnectThread(String deviceID, Handler handler) {
                     /* Add the code which is to be delayed for 1000 milliseconds */
                 try {
 
-                    /* Connect the Socket */
+                            /* Connect the Socket */
                             mBluetoothSocket.connect();
 
-                    /* Do all Socket Management */
+                            /* Do all Socket Management */
                             manageConnectedSocket();
 
                     } catch (IOException connectException) {
