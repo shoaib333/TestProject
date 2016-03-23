@@ -25,6 +25,8 @@
     <uses-permission android:name="android.permission.BLUETOOTH"  />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
 
     <application
         android:allowBackup="true"
@@ -46,7 +48,7 @@
 
 
         <activity
-            android:name=".MapsMainActivity"
+            android:name=".LocationServices_Entity.MapsMainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -56,25 +58,26 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MapsActivity"
+            android:name=".LocationServices_Entity.MapsActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".Main_Entity.MainActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".showBTdevices"
+            android:name=".Blutooth_Entity.showBTdevices"
             android:label="@string/app_name" >
         </activity>
 
 
-        <receiver android:name=".SmsBroadcastReceiver" android:exported="true" >
+        <receiver android:name=".SMS_Entity.SmsBroadcastReceiver" android:exported="true" >
             <intent-filter android:priority="999" >
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
-        <service android:exported="true" android:name=".BackgroundServiceBTService"/>
+
+        <service android:exported="true" android:name=".Blutooth_Entity.BackgroundServiceBTService"/>
         <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
              App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data
