@@ -7,9 +7,6 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.widget.Toast;
 
-/**
- * Created by DELL on 3/3/2016.
- */
 public class SmsBroadcastReceiver extends BroadcastReceiver {
     public static final String SMS_BUNDLE = "pdus";
 

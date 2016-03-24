@@ -8,9 +8,12 @@ import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
@@ -26,7 +29,7 @@ import com.example.dell.helloandroid.Blutooth_Entity.BTConnectThread;
 import com.example.dell.helloandroid.Blutooth_Entity.BTConnectionThread;
 import com.example.dell.helloandroid.Contacts_Entity.MyPhoneStateListener;
 import com.example.dell.helloandroid.R;
-import com.example.dell.helloandroid.Blutooth_Entity.showBTdevices;
+import com.example.dell.helloandroid.Blutooth_Entity.ShowBTdevices;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -74,29 +77,9 @@ public class MainActivity extends AppCompatActivity {
         final Button BT_device_button = (Button) findViewById(R.id.BTdeviceButton);
         Toast.makeText(getApplicationContext(),"Application is turned ON", Toast.LENGTH_LONG).show();
 
+        /*Setting Telephone manager listener to report any change in the phone state*/
         TelephonyManager telephonyManager = (TelephonyManager)getSystemService(
                 Context.TELEPHONY_SERVICE);
-
-//        PhoneStateListener callStateListener = new PhoneStateListener() {
-//            public void onCallStateChanged(int state, String incomingNumber){
-//                Toast.makeText(getApplicationContext(),"INSIDE state listener", Toast.LENGTH_LONG).show();
-//
-//                if(state==TelephonyManager.CALL_STATE_RINGING){
-//                    //tts.speak(incomingNumber+" calling", TextToSpeech.QUEUE_FLUSH, null);
-//                    Toast.makeText(getApplicationContext(),"Phone is Ringing : "+incomingNumber,
-//                            Toast.LENGTH_LONG).show();
-//                }
-//                if(state==TelephonyManager.CALL_STATE_OFFHOOK){
-//                    Toast.makeText(getApplicationContext(),"Phone in a call or call picked",
-//                            Toast.LENGTH_LONG).show();
-//                }
-//                if(state==TelephonyManager.CALL_STATE_IDLE){
-//                    //phone is neither ringing nor in a call
-//                }
-//                Toast.makeText(getApplicationContext(),"END LISTERNER", Toast.LENGTH_LONG).show();
-//            }
-//
-//        };
 
         MyPhoneStateListener callStateListener = new MyPhoneStateListener(this);
 
@@ -131,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 /* Create Intent to be passed to the BT device list */
-                Intent showDevicesIntent = new Intent(MainActivity.this, showBTdevices.class);
+                Intent showDevicesIntent = new Intent(MainActivity.this, ShowBTdevices.class);
 
                 /* Add the BT device list Strings to the Intent */
                 showDevicesIntent.putStringArrayListExtra("devices", discoverableDeviceList);
@@ -240,6 +223,8 @@ public class MainActivity extends AppCompatActivity {
     public void stopService(View view) {
         stopService(new Intent(getBaseContext(), BackgroundServiceBTService.class));
     }
+
+
 
 
 }

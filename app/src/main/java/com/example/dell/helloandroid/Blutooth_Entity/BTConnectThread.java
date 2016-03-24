@@ -1,25 +1,26 @@
 package com.example.dell.helloandroid.Blutooth_Entity;
 
+/*Android Imports*/
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.os.Handler;
 import android.util.Log;
-
-import com.example.dell.helloandroid.Main_Entity.MainActivity;
-
+import com.example.dell.helloandroid.Main_Entity.*;
 import java.io.IOException;
 
-/**
- * Created by DELL on 3/17/2016.
- */
+/*************************************************************/
+/* Class to manage ongoing Bluetooth Session */
+/*************************************************************/
 
 public class BTConnectThread extends Thread {
+
+    /*Local Variables*/
     private BluetoothSocket mBluetoothSocket;
     private final BluetoothDevice mDevice;
-    private final BluetoothAdapter mBluetoothAdapter = BluetoothAdapter
-            .getDefaultAdapter();
+    private final BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     private final Handler mHandler;
+
 
 public BTConnectThread(String deviceID, Handler handler) {
 
@@ -30,13 +31,10 @@ public BTConnectThread(String deviceID, Handler handler) {
         mHandler = handler;
 
         try {
-
-            /* Create a Bluetooth Socket that connects to the selected */
-            mBluetoothSocket = mDevice
-                    .createRfcommSocketToServiceRecord(showBTdevices.APP_UUID);
+            /* Create a Bluetooth Socket that connects to the selected device*/
+            mBluetoothSocket = mDevice.createRfcommSocketToServiceRecord(ShowBTdevices.APP_UUID);
 
         } catch (IOException e) {
-
             /* Dump all the StackTrace on Error Log */
             e.printStackTrace();
         }
@@ -44,6 +42,7 @@ public BTConnectThread(String deviceID, Handler handler) {
 
     public void run() {
 
+        /*Stop the device search as the device is already been discovered*/
         if(mBluetoothAdapter.isDiscovering()) {
             /* Stop Bluetooth Search because the device has already been discovered */
             mBluetoothAdapter.cancelDiscovery();
@@ -52,38 +51,38 @@ public BTConnectThread(String deviceID, Handler handler) {
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                    /* Add the code which is to be delayed for 1000 milliseconds */
+                /* Add the code which is to be delayed for 1000 milliseconds */
                 try {
+                    /* Connect the Socket */
+                    mBluetoothSocket.connect();
 
-                            /* Connect the Socket */
-                            mBluetoothSocket.connect();
+                    /* Do all Socket Management */
+                    manageConnectedSocket();
 
-                            /* Do all Socket Management */
-                            manageConnectedSocket();
+                } catch (IOException connectException) {
 
-                    } catch (IOException connectException) {
-
-                    /* Handle all Bluetooth Conenction Exceptions here */
+                    /* Handle all Bluetooth Connection Exceptions here */
                     try {
 
-                            /* Close Bluetooth Connection */
-                            mBluetoothSocket.close();
+                        /* Close Bluetooth Connection */
+                        mBluetoothSocket.close();
 
-                            Log.e("BTConnectThread Error", connectException.toString());
+                        Log.e("BTConnectThread Error", connectException.toString());
 
-                        } catch (IOException e) {
+                    } catch (IOException e) {
 
                         /* Dump all the StackTrace on Error Log */
                         e.printStackTrace();
 
-                        }
                     }
+                }
 
             }
         },1000 );
 
     }
 
+    /*Manage the socket that is opened earlier for rf communication*/
     private void manageConnectedSocket() {
 
         /* Create a Connection Thread to Handle the lower Socket level communication */
@@ -98,7 +97,6 @@ public BTConnectThread(String deviceID, Handler handler) {
 
     public void cancel() {
         try {
-
             /* Close the Bluetooth connection */
             mBluetoothSocket.close();
 
@@ -106,5 +104,4 @@ public BTConnectThread(String deviceID, Handler handler) {
 
         }
     }
-
 }

@@ -10,14 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import com.example.dell.helloandroid.Main_Entity.MainActivity;
 import com.example.dell.helloandroid.R;
 
-
-/**
- * Created by DELL on 3/5/2016.
- */
 public class MapsMainActivity extends Activity{
 
     private TextView myAccuracyView;

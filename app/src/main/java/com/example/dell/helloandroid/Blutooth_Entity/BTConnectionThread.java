@@ -1,19 +1,18 @@
 package com.example.dell.helloandroid.Blutooth_Entity;
 
+/*Android Imports*/
 import android.bluetooth.BluetoothSocket;
 import android.os.Handler;
-
 import com.example.dell.helloandroid.Main_Entity.MainActivity;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-/**
- * Created by DELL on 3/18/2016.
- */
 
+/*************************************************************/
 /* Class to Handle the Socket Layer of Bluetooth Connection */
+/*************************************************************/
+
 public class BTConnectionThread extends Thread {
 
     /* Create BluetoothSocket */
@@ -27,6 +26,7 @@ public class BTConnectionThread extends Thread {
     private OutputStream mOutStream;
 
 
+    /*BTConnectionThread constructor to set socket parameters*/
     BTConnectionThread(BluetoothSocket socket, Handler handler){
 
         super();
@@ -36,7 +36,6 @@ public class BTConnectionThread extends Thread {
         mHandler = handler;
 
         try {
-
             /* Store the Input and Output Streams */
             mInStream = mBluetoothSocket.getInputStream();
             mOutStream = mBluetoothSocket.getOutputStream();
@@ -62,27 +61,25 @@ public class BTConnectionThread extends Thread {
                 /* If Input data is available */
                 if (availabledata > 0)
                 {
-
-                    /* Read input stream for data recieved */
+                    /* Read input stream for data received */
                     bytes = mInStream.read(buffer);
                     String data = new String(buffer, 0, bytes);
 
-                    /* Return this recieved data back to the Calling Activity */
+                    /* Return this received data back to the Calling Activity */
                     mHandler.obtainMessage(MainActivity.DATA_RECEIVED,data).sendToTarget();
                 }
 
             } catch (IOException e) {
-
                 break;
-
             }
         }
     }
 
+    /*Function to write data on the Bluetooth output stream*/
     public void write(byte[] bytes) {
         try {
 
-            /* Write any data recieved on Output Stream*/
+            /* Write any data received on Output Stream*/
             mOutStream.write(bytes);
 
         } catch (IOException e) {

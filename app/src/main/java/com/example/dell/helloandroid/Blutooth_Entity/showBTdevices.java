@@ -1,6 +1,6 @@
 package com.example.dell.helloandroid.Blutooth_Entity;
 
-
+/*Android Imports*/
 import android.app.ListActivity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -15,16 +15,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.example.dell.helloandroid.R;
-
 import java.util.List;
 import java.util.UUID;
 
-/**
- * Created by DELL on 3/16/2016.
- */
-public class showBTdevices extends ListActivity {
+
+/*************************************************************/
+/* Class to Search and display available Bluetooth Devices   */
+/*************************************************************/
+
+public class ShowBTdevices extends ListActivity {
     BluetoothAdapter mBluetoothAdapter = null;
     ArrayAdapter<String> mArrayAdapter = null;
 
@@ -38,28 +38,26 @@ public class showBTdevices extends ListActivity {
 
             String action = intent.getAction();
 
-            // Discovery finds a device
+            /* Discovery finds a device*/
             if (BluetoothDevice.ACTION_FOUND.equals(action)){
 
-                // Get the BluetoothDevice object from the Intent
+                /* Get the BluetoothDevice object from the Intent */
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 
                 short rssi = intent.getShortExtra(BluetoothDevice.EXTRA_DEVICE, Short.MIN_VALUE);
 
-                // Add the name and address to an array adapter to show in a ListView
+                /* Add the name and address to an array adapter to show in a ListView */
                 System.out.println(device.getName());
                 mArrayAdapter.add(device.getName() + "\n" + device.getAddress() + "\n" + rssi);
                 Log.d("Device name:", device.getName());
-
             }
 
-            // Register the BroadcastReceiver
+            /* Register the BroadcastReceiver*/
             IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-            context.registerReceiver(mReceiver, filter); // Don't forget to unregister during onDestroy
-
-
+            context.registerReceiver(mReceiver, filter);
+            /* TODO: Don't forget to unregister during onDestroy*/
+            /* TODO: onDestroy implementation is missing*/
         };
-
     };
 
     @Override
@@ -138,4 +136,5 @@ public class showBTdevices extends ListActivity {
         super.onPause();
     }
 
+    /*TODO: Implement onDestroy function*/
 }
