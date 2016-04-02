@@ -1,7 +1,10 @@
 package com.example.dell.helloandroid.Contacts_Entity;
 
 /* Android Imports*/
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.Contacts;
@@ -10,8 +13,13 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.widget.Toast;
 import com.example.dell.helloandroid.Main_Entity.*;
+import com.example.dell.helloandroid.Blutooth_Entity.*;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Objects;
+import java.util.Set;
 /*************************************************************/
 /*  This class is responsible for getting the phone state
 *   whenever a call is detected, either outgoing or incoming */
@@ -46,7 +54,6 @@ public class MyPhoneStateListener extends PhoneStateListener {
             Toast.makeText(context,"Phone is Ringing : number = "+incomingNumber+": Name = "+name,
                     Toast.LENGTH_LONG).show();
 
-
         }
         /*check if the user has picked the call*/
         /*TODO: Forward the information of call duration over Bluetooth*/
@@ -61,7 +68,7 @@ public class MyPhoneStateListener extends PhoneStateListener {
     }
 
 
-    public String getContactName(final String phoneNumber)
+    public String getContactName(String phoneNumber)
     {
         String name = "Not found", number;
         Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
@@ -75,23 +82,15 @@ public class MyPhoneStateListener extends PhoneStateListener {
 
         people.moveToFirst();
 
-        StringBuilder sb = new StringBuilder(phoneNumber);
-        sb.deleteCharAt(0);
-        String tempNumberCaller = sb.toString();
-        tempNumberCaller = "+92"+tempNumberCaller; //adding country code in it
+        phoneNumber = removeSpaces(phoneNumber);
 
         do {
             number = people.getString(indexNumber);
             name = people.getString(indexName);
 
-            String tempNumberDirectory = number;
-            StringBuilder sbt = new StringBuilder(tempNumberDirectory);
-            sbt.deleteCharAt(3);
-            sbt.deleteCharAt(6);
+            number = removeSpaces(number);
 
-            tempNumberDirectory = sbt.toString();
-
-            if(phoneNumber.equals(number) || tempNumberCaller.equals(tempNumberDirectory)){
+            if(phoneNumber.equals(number)){
                 name   = people.getString(indexName);
 
                 Toast.makeText(context,"MATCH FOUND number = "+number+": Name = "+name,
@@ -105,4 +104,31 @@ public class MyPhoneStateListener extends PhoneStateListener {
         return name;
     }
 
+    private String removeSpaces(String stringToRemoveSpaces)
+    {
+        StringBuilder sb = new StringBuilder(stringToRemoveSpaces);
+        /* Number received in + format, delete spaces in the number if any*/
+
+        while(sb.indexOf(" ") >= 0)
+        {
+                /*delete space found in the number string*/
+            sb.deleteCharAt(sb.indexOf(" "));
+        }
+
+        if(sb.indexOf("+") >= 0)
+        {
+            stringToRemoveSpaces = sb.toString();
+        }
+        /* Delete spaces in the number if any*/
+        else
+        {
+            /*remove the first 0 present and add + country code in it*/
+            sb.deleteCharAt(0);
+            stringToRemoveSpaces = sb.toString();
+            stringToRemoveSpaces = "+92"+stringToRemoveSpaces;
+        }
+
+        /*string with spaces removed*/
+        return stringToRemoveSpaces;
+    }
 }
