@@ -40,12 +40,12 @@ public class MainActivity extends AppCompatActivity {
     private BTConnectionThread mBluetoothConnection = null;
 
     Set<BluetoothDevice> pairedDevices;
-    private BluetoothSocket mBluetoothSocket;
-
 
     private ArrayList<String> discoverableDeviceList;
-    BroadcastReceiver mReceiver;
+
     private String data = "";
+
+    private boolean btConnected = false;
 
     /* String for Debug Log */
     private static final String TAG = "Bluetooth Activity";
@@ -53,12 +53,10 @@ public class MainActivity extends AppCompatActivity {
     /* Codes used between BT activities for different commands */
     private static final int REQUEST_ENABLE_BT = 0;
     public static final int REQUEST_BLUETOOTH = 1;
+    public static final int CALL_RECEIVED = 2;
     public static final int DATA_RECEIVED = 3;
     public static final int SOCKET_CONNECTED = 4;
 
-    private BluetoothDevice mDevice;
-
-    String btMessageStr = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,11 +75,11 @@ public class MainActivity extends AppCompatActivity {
         final Button BT_device_button = (Button) findViewById(R.id.BTdeviceButton);
         Toast.makeText(getApplicationContext(),"Application is turned ON", Toast.LENGTH_LONG).show();
 
-        /*Setting Telephone manager listener to report any change in the phone state*/
+        /* Setting Telephone manager listener to report any change in the phone state */
         TelephonyManager telephonyManager = (TelephonyManager)getSystemService(
                 Context.TELEPHONY_SERVICE);
 
-        MyPhoneStateListener callStateListener = new MyPhoneStateListener(this);
+        MyPhoneStateListener callStateListener = new MyPhoneStateListener(this,mHandler);
 
         telephonyManager.listen(callStateListener, PhoneStateListener.LISTEN_CALL_STATE);
         Toast.makeText(getApplicationContext(),"TELEPHONE MANAGER IS SET TO LISTEN", Toast.LENGTH_LONG).show();
@@ -172,8 +170,12 @@ public class MainActivity extends AppCompatActivity {
                     data = "Device Connected to: " + msg.obj.toString();
                     Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
 
+                    /* Set btConnected flag to true */
+                    btConnected = true;
+
                     mBluetoothConnection = (BTConnectionThread) msg.obj;
                     mBluetoothConnection.write("this is a message".getBytes());
+
                     break;
                 }
                 case DATA_RECEIVED: {
@@ -185,6 +187,21 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
 
                     mBluetoothConnection.write(data.getBytes());
+                }
+                case CALL_RECEIVED: {
+                    Context context = getBaseContext();
+
+                    /* Save the Contact name */
+                    data = (String) msg.obj;
+
+                    /* TODO: -----------------> Add processing here that what is to be done of this recieved contact information <-------------- */
+                    Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
+
+                    if (btConnected){
+
+                        /* If BT is already connected with some device */
+                        mBluetoothConnection.write(data.getBytes());
+                    }
                 }
                 default:
                     break;
