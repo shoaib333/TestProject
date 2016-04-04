@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Handler;
 import android.provider.Contacts;
 import android.provider.ContactsContract;
 import android.telephony.PhoneStateListener;
@@ -28,42 +29,55 @@ import java.util.Set;
 public class MyPhoneStateListener extends PhoneStateListener {
 
     private static final String TAG = "CustomPhoneStateLstner";
+    private final Handler mHandler;
 
     Context context;
 
-    /*Constructor to set the context of the application*/
-    public MyPhoneStateListener(Context context)
+    /* Constructor to set the context of the application */
+    public MyPhoneStateListener(Context context, Handler handler)
     {
-        /*Setting the Context of the application, will be used for displaying toast*
+        /* Setting the Context of the application, will be used for displaying toast*
         TODO: remove Context related code as it is not required in the final code/
          */
         this.context=context;
+
+        /* Message Handler of the UI thread to which the Conctact Information will be sent to*/
+        mHandler = handler;
+
     }
 
-    /*Function that is used to detect any change in the phone state while calling or Idle*/
+    /* Function that is used to detect any change in the phone state while calling or Idle */
     public void onCallStateChanged(int state, String incomingNumber){
 
-        /*Check if the phone is ringing*/
+        /* Check if the phone is ringing */
         if(state==TelephonyManager.CALL_STATE_RINGING){
 
-            /*TODO: Retrieve Contact details from the phone number*/
+            /* TODO: Retrieve Contact details from the phone number */
             String name = "Not in Contacts";
 
             name = getContactName(incomingNumber);
-             /*Temporary display*/
+
+            /* Send Connected Socket back to the calling Activity */
+            mHandler.obtainMessage(MainActivity.CALL_RECEIVED, name).sendToTarget();
+
+
+            /* Temporary display */
             Toast.makeText(context,"Phone is Ringing : number = "+incomingNumber+": Name = "+name,
                     Toast.LENGTH_LONG).show();
 
+
         }
-        /*check if the user has picked the call*/
-        /*TODO: Forward the information of call duration over Bluetooth*/
+        /* check if the user has picked the call */
+
+        /* TODO: Forward the information of call duration over Bluetooth */
         if(state==TelephonyManager.CALL_STATE_OFFHOOK){
             Toast.makeText(context,"Phone in a call or call picked",
                     Toast.LENGTH_LONG).show();
         }
+
         if(state==TelephonyManager.CALL_STATE_IDLE){
-            /*phone is neither ringing nor in a call*/
-            /*Call terminated?*/
+            /* phone is neither ringing nor in a call */
+            /* Call terminated? */
         }
     }
 
