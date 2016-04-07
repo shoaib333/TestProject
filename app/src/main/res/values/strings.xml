@@ -7,4 +7,6 @@
     <string name="location_string">Enter Location</string>
     <string name="title_activity_maps">Meter Maps</string>
     <string name="search_bt_devices">Connect To Bluetooth Device</string>
+    <string name="title_activity_login_page">login_page</string>
+    <string name="title_activity_about_idealojy">about_idealojy</string>
 </resources>
