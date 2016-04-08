@@ -1,5 +1,6 @@
 package com.example.dell.helloandroid.Startup_Pages;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -176,6 +177,15 @@ public class login_page extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();  // Always call the superclass method first
+
+        Intent intent = ((Activity) login_page.this).getIntent();
+
+
     }
 
 }
