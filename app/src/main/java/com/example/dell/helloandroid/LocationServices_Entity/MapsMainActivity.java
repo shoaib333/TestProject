@@ -8,6 +8,8 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +17,8 @@ import android.widget.TextView;
 
 import com.example.dell.helloandroid.Main_Entity.MainActivity;
 import com.example.dell.helloandroid.R;
+import com.example.dell.helloandroid.Startup_Pages.about_idealojy;
+import com.example.dell.helloandroid.Startup_Pages.login_page;
 
 public class MapsMainActivity extends AppCompatActivity {
 
@@ -44,42 +48,80 @@ public class MapsMainActivity extends AppCompatActivity {
         final Button map_button = (Button) findViewById(R.id.mapButton);
 
         final Button BT_button = (Button) findViewById(R.id.btButton);
-        setSupportActionBar(toolbar_main);
+        toolbar_main.setTitle("IdeaMeter");
+        toolbar_main.inflateMenu(R.menu.personal_screen);
 
-        map_button.setOnClickListener(new View.OnClickListener() {
+        toolbar_main.setOnMenuItemClickListener(
+                new Toolbar.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        // Handle menu item click event
+                        switch (item.getItemId()) {
+                            //Change the ImageView image source depends on menu item click
+                            case R.id.logout:
 
-            public void onClick(View v) {
-                try {
-                    String source_address = source_addrText.getText().toString();
-                    String destination_address = destination_addrText.getText().toString();
+                                Intent getIntent = new Intent(MapsMainActivity.this, login_page.class);
+                                getIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(getIntent);
+                                finish(); // call this to finish the current activity
 
-                    source_address = source_address.replace(' ', '+');
-                    destination_address = destination_address.replace(' ', '+');
-                    Intent getIntent = new Intent(MapsMainActivity.this,MapsActivity.class);
+                                return true;
+                        }
+                        return true;
+                    }
+                });
 
-                    // Use the Intent to start Google Maps application using Activity.startActivity()
-                    startActivity(getIntent);
+                    map_button.setOnClickListener(new View.OnClickListener()
 
-                } catch (Exception e) {
+                    {
 
+                        public void onClick (View v){
+                        try {
+                            String source_address = source_addrText.getText().toString();
+                            String destination_address = destination_addrText.getText().toString();
+
+                            source_address = source_address.replace(' ', '+');
+                            destination_address = destination_address.replace(' ', '+');
+                            Intent getIntent = new Intent(MapsMainActivity.this, MapsActivity.class);
+
+                            // Use the Intent to start Google Maps application using Activity.startActivity()
+                            startActivity(getIntent);
+
+                        } catch (Exception e) {
+
+                        }
+
+                    }
+                    }
+
+                    );
+
+                    BT_button.setOnClickListener(new View.OnClickListener()
+
+                    {
+                        public void onClick (View v){
+                        try {
+                            Intent getIntent = new Intent(MapsMainActivity.this, MainActivity.class);
+
+                            //Start the Main Activity to Read SMS and Start BT Service
+                            startActivity(getIntent);
+                        } catch (Exception e) {
+
+                        }
+                    }
+                    }
+
+                    );
                 }
 
-            }
-        });
-
-        BT_button.setOnClickListener(new View.OnClickListener(){
-            public void onClick (View v){
-                try {
-                    Intent getIntent = new Intent(MapsMainActivity.this,MainActivity.class);
-
-                    //Start the Main Activity to Read SMS and Start BT Service
-                    startActivity(getIntent);
-                }
-                catch (Exception e) {
-
-                }
-            }
-        });
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0)
+        {
+            this.moveTaskToBack(true);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
 
