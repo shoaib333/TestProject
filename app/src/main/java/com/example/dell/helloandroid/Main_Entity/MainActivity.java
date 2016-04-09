@@ -70,7 +70,22 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
 
-            Toast.makeText(getApplicationContext(),"Intent Received through Broadcast Reciever", Toast.LENGTH_SHORT).show();
+            /* Toast.makeText(getApplicationContext(),"Intent Received through Broadcast Reciever", Toast.LENGTH_SHORT).show(); */
+            String address = "";
+            String body = "";
+
+            /* Get Phone number */
+            address = intent.getStringExtra("address");
+
+            /* Get SMS Body */
+            body = intent.getStringExtra("body");
+
+            if (btConnected)
+            {
+                /* Write the SMS to Bluetooth */
+                mBluetoothConnection.write(body.getBytes());
+
+            }
         }
     };
 

@@ -16,36 +16,42 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Bundle intentExtras = intent.getExtras();
         if (intentExtras != null) {
+
             Object[] sms = (Object[]) intentExtras.get(SMS_BUNDLE);
-            String smsMessageStr = "";
+//            String smsMessageStr = "";
             String smsBody = "";
+            String address = "";
+
             for (int i = 0; i < sms.length; ++i) {
                 SmsMessage smsMessage = SmsMessage.createFromPdu((byte[]) sms[i]);
 
                 smsBody = smsMessage.getMessageBody().toString();
-                String address = smsMessage.getOriginatingAddress();
+                address = smsMessage.getOriginatingAddress();
 
-                smsMessageStr += "SMS From: " + address + "\n";
-                smsMessageStr += smsBody + "\n";
+//                smsMessageStr += "SMS From: " + address + "\n";
+//                smsMessageStr += smsBody + "\n";
             }
-            Toast.makeText(context, smsMessageStr, Toast.LENGTH_SHORT).show();
-/*
+/*            Toast.makeText(context, smsMessageStr, Toast.LENGTH_SHORT).show();
+
             //this will update the UI with message
             SmsActivity inst = SmsActivity.instance();
             inst.updateList(smsMessageStr);*/
 
             /* send smsBroadcast */
-            sBroadcast(context, intent);
+            sBroadcast(context, intent, address, smsBody);
 
         }
     }
 
 
-    public void sBroadcast(Context context,Intent intent){
+    public void sBroadcast(Context context,Intent intent, String address, String body){
 
         /* The Intent to be sent in the Broadcast */
         Intent smsBroadcast = new Intent(SmsBroadcastReceiver.BROADCAST_ACTION);
 
+        /* Add the phone number with the Extra Tag "address" */
+        smsBroadcast.putExtra("address",address);
+        smsBroadcast.putExtra("body", body);
 
         /* Broadcast the Intent */
         LocalBroadcastManager.getInstance(context).sendBroadcast(smsBroadcast);
