@@ -18,7 +18,7 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
         if (intentExtras != null) {
 
             Object[] sms = (Object[]) intentExtras.get(SMS_BUNDLE);
-//            String smsMessageStr = "";
+            String smsMessageStr = "";
             String smsBody = "";
             String address = "";
 
@@ -28,13 +28,13 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
                 smsBody = smsMessage.getMessageBody().toString();
                 address = smsMessage.getOriginatingAddress();
 
-//                smsMessageStr += "SMS From: " + address + "\n";
-//                smsMessageStr += smsBody + "\n";
+                smsMessageStr += "SMS From: " + address + "\n";
+                smsMessageStr += smsBody + "\n";
             }
-/*            Toast.makeText(context, smsMessageStr, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, smsMessageStr, Toast.LENGTH_SHORT).show();
 
             //this will update the UI with message
-            SmsActivity inst = SmsActivity.instance();
+/*            SmsActivity inst = SmsActivity.instance();
             inst.updateList(smsMessageStr);*/
 
             /* send smsBroadcast */
