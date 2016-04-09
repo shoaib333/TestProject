@@ -8,12 +8,14 @@ import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.ContactsContract;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
@@ -30,6 +32,7 @@ import com.example.dell.helloandroid.Blutooth_Entity.BTConnectionThread;
 import com.example.dell.helloandroid.Contacts_Entity.MyPhoneStateListener;
 import com.example.dell.helloandroid.R;
 import com.example.dell.helloandroid.Blutooth_Entity.ShowBTdevices;
+import com.example.dell.helloandroid.SMS_Entity.SmsBroadcastReceiver;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -38,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
     private BluetoothAdapter mBluetoothAdapter = null;
     private BTConnectionThread mBluetoothConnection = null;
+
+    private SmsBroadcastReceiver smsBroadcastReceiver = null;
 
     Set<BluetoothDevice> pairedDevices;
 
@@ -56,6 +61,18 @@ public class MainActivity extends AppCompatActivity {
     public static final int CALL_RECEIVED = 2;
     public static final int DATA_RECEIVED = 3;
     public static final int SOCKET_CONNECTED = 4;
+    public static final int SMS_RECEIVED = 5;
+
+
+
+    /* Broadcast Receiver for smsBroadcast */
+    private BroadcastReceiver smsReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            Toast.makeText(getApplicationContext(),"Intent Received through Broadcast Reciever", Toast.LENGTH_SHORT).show();
+        }
+    };
 
 
     @Override
@@ -75,6 +92,11 @@ public class MainActivity extends AppCompatActivity {
         final Button BT_device_button = (Button) findViewById(R.id.BTdeviceButton);
         Toast.makeText(getApplicationContext(),"Application is turned ON", Toast.LENGTH_LONG).show();
 
+        /* Create a LocalBroadcast Manager */
+        LocalBroadcastManager.getInstance(this).registerReceiver(smsReceiver,
+                new IntentFilter(SmsBroadcastReceiver.BROADCAST_ACTION));
+
+
         /* Setting Telephone manager listener to report any change in the phone state */
         TelephonyManager telephonyManager = (TelephonyManager)getSystemService(
                 Context.TELEPHONY_SERVICE);
@@ -93,10 +115,6 @@ public class MainActivity extends AppCompatActivity {
             startActivityForResult(enableBT, REQUEST_ENABLE_BT);
 
         }
-
-
-//        startService(new Intent(getBaseContext(), BackgroundServiceBTService.class));
-
 
         BT_device_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -124,6 +142,16 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+
+        /* Register the smsBroadcast Reciever */
+        IntentFilter filter = new IntentFilter();
+
+        /* Add the Action for which the Listener will listen to */
+        filter.addAction(SmsBroadcastReceiver.BROADCAST_ACTION);
+
+        /* Register the Broadcast receiver against the BROADCAST_ACTION */
+        registerReceiver(smsReceiver, filter);
+
         }
 
     @Override
@@ -145,17 +173,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
     }
 
     public Handler mHandler = new Handler() {
@@ -195,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
                     data = (String) msg.obj;
 
                     /* TODO: -----------------> Add processing here that what is to be done of this recieved contact information <-------------- */
-                    Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
 
                     if (btConnected){
 
@@ -242,6 +259,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
+    @Override
+    protected void onDestroy() {
+        // Unregister since the activity is about to be closed.
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(smsBroadcastReceiver);
+        super.onDestroy();
+    }
 
 }
