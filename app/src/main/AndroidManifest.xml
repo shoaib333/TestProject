@@ -59,13 +59,13 @@
             android:name=".Blutooth_Entity.ShowBTdevices"
             android:label="IdeaMeter" />
 
-        <receiver
-            android:name=".SMS_Entity.SmsBroadcastReceiver"
-            android:exported="true">
-            <intent-filter android:priority="999">
-                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
-            </intent-filter>
-        </receiver>
+        <!--<receiver-->
+            <!--android:name=".SMS_Entity.SmsBroadcastReceiver"-->
+            <!--android:exported="true">-->
+            <!--<intent-filter android:priority="999">-->
+                <!--<action android:name="android.provider.Telephony.SMS_RECEIVED" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
 
         <service
             android:name=".Blutooth_Entity.BackgroundServiceBTService"
