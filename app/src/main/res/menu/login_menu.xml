@@ -15,4 +15,9 @@
     android:title="Settings"
     android:showAsAction="always"
     />
+<item
+    android:id="@+id/clear_db"
+    android:title="clear database"
+    android:showAsAction="always"
+    />
 </menu>
