@@ -34,8 +34,9 @@
         android:id="@+id/fb_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/password"
-        android:layout_marginTop="5dp"
+        android:layout_toLeftOf="@+id/app_login"
+        android:layout_marginTop="146dp"
+        android:layout_marginRight="25dp"
         android:layout_centerHorizontal="true"
         android:text="facebook" />
 
@@ -43,8 +44,9 @@
         android:id="@+id/gm_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/fb_login"
-        android:layout_marginTop="138dp"
+        android:layout_toRightOf="@+id/app_login"
+        android:layout_marginTop="146dp"
+        android:layout_marginLeft="25dp"
         android:layout_centerHorizontal="true"
         android:text="gmail" />
 
@@ -52,9 +54,27 @@
         android:id="@+id/app_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/fb_login"
-        android:layout_marginTop="138dp"
+        android:layout_below="@+id/password"
+        android:layout_marginTop="5dp"
         android:layout_centerHorizontal="true"
         android:text="login" />
+
+    <Button
+        android:id="@+id/app_signup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/app_login"
+        android:layout_marginTop="80dp"
+        android:layout_centerHorizontal="true"
+        android:text="signup" />
+
+    <TextView android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/app_login"
+        android:layout_marginStart="115dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="60dp"
+        android:text="Sign Up, it's free!" />
 
 </RelativeLayout>
