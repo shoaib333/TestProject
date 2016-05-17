@@ -30,7 +30,6 @@ public class ShowBTdevices extends ListActivity {
 
     /* Generic SPP device UUID */
     public static final UUID APP_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-//            .fromString("aeb9f938-a1a3-4947-ace2-9ebd0c67adf1");
 
     BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override

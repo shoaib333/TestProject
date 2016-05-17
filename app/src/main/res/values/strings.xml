@@ -4,9 +4,11 @@
     <string name="show_map_string">Open Map</string>
     <string name="open_bt_string">Start Bluetooth</string>
     <string name="recieve_sms_string">Allow SMS</string>
-    <string name="location_string">Enter Location</string>
+    <string name="source_location_string">Enter Source Location</string>
+    <string name="destination_location_string">Enter Destination Location</string>
     <string name="title_activity_maps">Meter Maps</string>
     <string name="search_bt_devices">Connect To Bluetooth Device</string>
     <string name="title_activity_login_page">login_page</string>
     <string name="title_activity_about_idealojy">about_idealojy</string>
+    <string name="title_activity_signup">signup</string>
 </resources>

@@ -42,7 +42,7 @@ public BTConnectThread(String deviceID, Handler handler) {
 
     public void run() {
 
-        /*Stop the device search as the device is already been discovered*/
+        /* Stop the device search as the device has already been discovered*/
         if(mBluetoothAdapter.isDiscovering()) {
             /* Stop Bluetooth Search because the device has already been discovered */
             mBluetoothAdapter.cancelDiscovery();

@@ -28,8 +28,8 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="IdeaMeter"
+        android:icon="@drawable/meter_logo"
+        android:label="Idea Meter"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
@@ -59,13 +59,13 @@
             android:name=".Blutooth_Entity.ShowBTdevices"
             android:label="IdeaMeter" />
 
-        <receiver
-            android:name=".SMS_Entity.SmsBroadcastReceiver"
-            android:exported="true">
-            <intent-filter android:priority="999">
-                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
-            </intent-filter>
-        </receiver>
+        <!--<receiver-->
+            <!--android:name=".SMS_Entity.SmsBroadcastReceiver"-->
+            <!--android:exported="true">-->
+            <!--<intent-filter android:priority="999">-->
+                <!--<action android:name="android.provider.Telephony.SMS_RECEIVED" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
 
         <service
             android:name=".Blutooth_Entity.BackgroundServiceBTService"
@@ -74,8 +74,7 @@
         <activity
             android:name=".Startup_Pages.login_page"
             android:label="IdeaMeter"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <!--
              ATTENTION: This was auto-generated to add Google Play services to your project for
              App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -83,19 +82,25 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
         <activity
             android:name=".Startup_Pages.about_idealojy"
             android:label="About Idealojy"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity android:name=".Startup_Pages.splash"
+        <activity
+            android:name=".Startup_Pages.splash"
             android:label="IdeaMeter"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".SignUp.signup"
+            android:label="@string/title_activity_signup"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
