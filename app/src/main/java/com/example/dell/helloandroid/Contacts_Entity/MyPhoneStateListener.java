@@ -15,6 +15,7 @@ import android.telephony.TelephonyManager;
 import android.widget.Toast;
 import com.example.dell.helloandroid.Main_Entity.*;
 import com.example.dell.helloandroid.Blutooth_Entity.*;
+import com.example.dell.helloandroid.MeterUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -55,7 +56,8 @@ public class MyPhoneStateListener extends PhoneStateListener {
             /* TODO: Retrieve Contact details from the phone number */
             String name = "Not in Contacts";
 
-            name = getContactName(incomingNumber);
+            MeterUtils utils = new MeterUtils();
+            name = utils.getContactName(incomingNumber, context);
 
             /* Send Connected Socket back to the calling Activity */
             mHandler.obtainMessage(MainActivity.CALL_RECEIVED, name).sendToTarget();
@@ -79,70 +81,5 @@ public class MyPhoneStateListener extends PhoneStateListener {
             /* phone is neither ringing nor in a call */
             /* Call terminated? */
         }
-    }
-
-
-    public String getContactName(String phoneNumber)
-    {
-        String name = "Not found", number;
-        Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
-        String[] projection = new String[] {ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
-                ContactsContract.CommonDataKinds.Phone.NUMBER};
-
-        Cursor people = this.context.getContentResolver().query(uri, projection, null, null, null);
-
-        int indexName = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
-        int indexNumber = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-
-        people.moveToFirst();
-
-        phoneNumber = removeSpaces(phoneNumber);
-
-        do {
-            number = people.getString(indexNumber);
-            name = people.getString(indexName);
-
-            number = removeSpaces(number);
-
-            if(phoneNumber.equals(number)){
-                name   = people.getString(indexName);
-
-                Toast.makeText(context,"MATCH FOUND number = "+number+": Name = "+name,
-                        Toast.LENGTH_LONG).show();
-
-                break;
-            }
-
-        } while (people.moveToNext());
-
-        return name;
-    }
-
-    private String removeSpaces(String stringToRemoveSpaces)
-    {
-        StringBuilder sb = new StringBuilder(stringToRemoveSpaces);
-        /* Number received in + format, delete spaces in the number if any*/
-
-        while(sb.indexOf(" ") >= 0)
-        {
-                /*delete space found in the number string*/
-            sb.deleteCharAt(sb.indexOf(" "));
-        }
-
-        if(sb.indexOf("+") >= 0)
-        {
-            stringToRemoveSpaces = sb.toString();
-        }
-        /* Delete spaces in the number if any*/
-        else
-        {
-            /*remove the first 0 present and add + country code in it*/
-            sb.deleteCharAt(0);
-            stringToRemoveSpaces = sb.toString();
-            stringToRemoveSpaces = "+92"+stringToRemoveSpaces;
-        }
-
-        /*string with spaces removed*/
-        return stringToRemoveSpaces;
     }
 }
