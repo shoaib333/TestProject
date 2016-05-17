@@ -5,8 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.telephony.PhoneStateListener;
 import android.telephony.SmsMessage;
 import android.widget.Toast;
+import com.example.dell.helloandroid.MeterUtils;
+
 
 public class SmsBroadcastReceiver extends BroadcastReceiver {
     public static final String SMS_BUNDLE = "pdus";
@@ -36,6 +39,12 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
             //this will update the UI with message
 /*            SmsActivity inst = SmsActivity.instance();
             inst.updateList(smsMessageStr);*/
+
+            /*Search the name in the directory*/
+            MeterUtils utils = new MeterUtils();
+            String name = utils.getContactName(address, context);
+
+            Toast.makeText(context, ("received message contact name is "+name), Toast.LENGTH_SHORT).show();
 
             /* send smsBroadcast */
             sBroadcast(context, intent, address, smsBody);
