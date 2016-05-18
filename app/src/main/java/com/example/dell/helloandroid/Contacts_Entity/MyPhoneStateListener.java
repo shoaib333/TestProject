@@ -59,8 +59,10 @@ public class MyPhoneStateListener extends PhoneStateListener {
             MeterUtils utils = new MeterUtils();
             name = utils.getContactName(incomingNumber, context);
 
+            String callRC = utils.getFormattedString(name, incomingNumber, "", utils.RC_CALL);
+
             /* Send Connected Socket back to the calling Activity */
-            mHandler.obtainMessage(MainActivity.CALL_RECEIVED, name).sendToTarget();
+            mHandler.obtainMessage(MainActivity.CALL_RECEIVED, callRC).sendToTarget();
 
 
             /* Temporary display */
