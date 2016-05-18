@@ -44,23 +44,25 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
             MeterUtils utils = new MeterUtils();
             String name = utils.getContactName(address, context);
 
+            /*Get the formatted message from with RC code tag*/
+            String smsRC = utils.getFormattedString(name, address, smsBody, utils.RC_SMS);
+
             Toast.makeText(context, ("received message contact name is "+name), Toast.LENGTH_SHORT).show();
 
             /* send smsBroadcast */
-            sBroadcast(context, intent, address, smsBody);
+            sBroadcast(context, intent, smsRC);
 
         }
     }
 
 
-    public void sBroadcast(Context context,Intent intent, String address, String body){
+    public void sBroadcast(Context context,Intent intent, String smsRC){
 
         /* The Intent to be sent in the Broadcast */
         Intent smsBroadcast = new Intent(SmsBroadcastReceiver.BROADCAST_ACTION);
 
-        /* Add the phone number with the Extra Tag "address" */
-        smsBroadcast.putExtra("address",address);
-        smsBroadcast.putExtra("body", body);
+        /* Add the formatted SMS with RC code to transmit it over bluetooth*/
+        smsBroadcast.putExtra("smsRC",smsRC);
 
         /* Broadcast the Intent */
         LocalBroadcastManager.getInstance(context).sendBroadcast(smsBroadcast);

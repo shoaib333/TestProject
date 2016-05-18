@@ -64,27 +64,24 @@ public class MainActivity extends AppCompatActivity {
     public static final int SMS_RECEIVED = 5;
 
 
-
     /* Broadcast Receiver for smsBroadcast */
     private BroadcastReceiver smsReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
 
             /* Toast.makeText(getApplicationContext(),"Intent Received through Broadcast Reciever", Toast.LENGTH_SHORT).show(); */
-            String address = "";
-            String body = "";
 
-            /* Get Phone number */
-            address = intent.getStringExtra("address");
-
-            /* Get SMS Body */
-            body = intent.getStringExtra("body");
+            /* Get SMS RC formatted String*/
+            String smsRC = intent.getStringExtra("smsRC");
 
             if (btConnected)
             {
-                /* Write the SMS to Bluetooth */
-                mBluetoothConnection.write(body.getBytes());
+                Toast.makeText(context,
+                              ("sending RC message over BT = "+smsRC),
+                              Toast.LENGTH_SHORT).show();
 
+                /* Write the SMS to Bluetooth */
+                mBluetoothConnection.write(smsRC.getBytes());
             }
         }
     };
@@ -101,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
             Log.i(TAG, "Bluetooth not supported");
             finish();
         }
-
 
         setContentView(R.layout.bluetooth_device_layout);
         final Button BT_device_button = (Button) findViewById(R.id.BTdeviceButton);
@@ -230,6 +226,9 @@ public class MainActivity extends AppCompatActivity {
 //                    Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
 
                     if (btConnected){
+                        Toast.makeText(context,
+                                ("sending RC call over BT = "+data),
+                                Toast.LENGTH_SHORT).show();
 
                         /* If BT is already connected with some device */
                         mBluetoothConnection.write(data.getBytes());
