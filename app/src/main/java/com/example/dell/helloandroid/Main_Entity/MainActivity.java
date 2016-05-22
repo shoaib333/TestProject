@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
                     btConnected = true;
 
                     mBluetoothConnection = (BTConnectionThread) msg.obj;
-                    mBluetoothConnection.write("this is a message".getBytes());
+                    mBluetoothConnection.write("03:BT Connection Established:\r\n".getBytes());
 
                     break;
                 }

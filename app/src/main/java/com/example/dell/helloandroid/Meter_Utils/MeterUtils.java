@@ -87,13 +87,13 @@ public class MeterUtils {
             Response Codes For Services:
             SMS: 01, name, no, and message
             Call: 02 , name and no
-            Bluetooth: 06... TODO add cases
+            Bluetooth: 03... TODO add cases
 
             Incoming TODO
-            Speed: 03, TODO
+            Speed: 06, TODO
             Distance: 04 TODO
             RPM: 05 TODO
-            Bluetooth: 06... TODO add cases
+            Bluetooth: 03... TODO add cases
             Fuel: 07 ... TODO
             Engine Oil: 08 TODO
 
@@ -106,6 +106,8 @@ public class MeterUtils {
             case RC_SMS:
                 return RCCode+":"+name+":"+number+":"+message;
             case RC_CALL:
+                return RCCode+":"+name+":"+number;
+            case RC_BLUETOOTH:
                 return RCCode+":"+name+":"+number;
             default:
                 return "00:00:00";
