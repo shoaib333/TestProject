@@ -104,13 +104,13 @@ public class MeterUtils {
         switch (RCCode)
         {
             case RC_SMS:
-                return RCCode+":"+name+":"+number+":"+message;
+                return RCCode+":"+name+":"+number+":"+message+"\r\n";
             case RC_CALL:
-                return RCCode+":"+name+":"+number;
+                return RCCode+":"+name+":"+number+"\r\n";
             case RC_BLUETOOTH:
-                return RCCode+":"+name+":"+number;
+                return RCCode+":"+name+":"+number+"\r\n";
             default:
-                return "00:00:00";
+                return "00:00:00\r\n";
         }
     }
 }
