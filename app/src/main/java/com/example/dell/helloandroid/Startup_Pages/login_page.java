@@ -1,33 +1,25 @@
 package com.example.dell.helloandroid.Startup_Pages;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
-import com.example.dell.helloandroid.DataBase.Contact;
-import com.example.dell.helloandroid.DataBase.DataBaseHandler;
 import com.example.dell.helloandroid.LocationServices_Entity.MapsMainActivity;
 import com.example.dell.helloandroid.R;
+import com.example.dell.helloandroid.Settings.Settings;
 import com.example.dell.helloandroid.SignUp.signup;
-
-import java.util.List;
 
 public class login_page extends AppCompatActivity {
 
-    protected static DataBaseHandler database;
     static int user_count=0;
 
     @Override
@@ -38,7 +30,7 @@ public class login_page extends AppCompatActivity {
 
         Button fb_login = (Button) findViewById(R.id.fb_login);
         Button gm_login = (Button) findViewById(R.id.gm_login);
-        Button app_login = (Button) findViewById(R.id.app_login);
+        final Button app_login = (Button) findViewById(R.id.app_login);
         Button app_signup = (Button) findViewById(R.id.app_signup);
         final EditText User_Name = (EditText) findViewById(R.id.user_name);
         final EditText Password = (EditText) findViewById(R.id.password);
@@ -49,7 +41,6 @@ public class login_page extends AppCompatActivity {
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
-        database = new DataBaseHandler(this);
 
         /**
          * CRUD Operations
@@ -69,7 +60,7 @@ public class login_page extends AppCompatActivity {
                                 startActivity(getIntent);
                                 return true;
                             case R.id.clear_db:
-                                database.delete_all_contacts();
+                                //database.delete_all_contacts();
                                 return true;
                             case R.id.about_ideaMeter:
                                 return true;
@@ -116,42 +107,43 @@ public class login_page extends AppCompatActivity {
             public void onClick(View v) {
                 try {
 
-                    List<Contact> contacts = database.getAllContacts();
-                    boolean found_flag = false;
+                    Settings appSetting = new Settings(getApplicationContext());
+                    if (User_Name.getText().toString().equals(appSetting.getName()) &&
+                            Password.getText().toString().equals(appSetting.getPassword()))
+                    {
+                        Toast.makeText(getApplicationContext(),
+                                "LOGIN SUCCESSFUL username = " + User_Name.getText().toString(),
+                                Toast.LENGTH_LONG).show();
 
-                    for (Contact cn : contacts) {
-                        String log = "Id: "+cn.getID()+" ,Name: " + cn.getName() + " ,Phone: " + cn.getPhoneNumber();
-                        // Writing Contacts to log
-                        Log.d("Name: ", log);
-                        if(User_Name.getText().toString().equals(cn.getName()) && Password.getText().toString().equals(cn.getPhoneNumber()))
-                        {
-                            found_flag = true;
-                            Intent getIntent = new Intent(login_page.this, MapsMainActivity.class);
+                        Toast.makeText(getApplicationContext(), "Name = :"+appSetting.getName()+
+                                " pswd : "+appSetting.getPassword(), Toast.LENGTH_LONG).show();
 
-                            // Use the Intent to start Google Maps application using Activity.startActivity()
-                            startActivity(getIntent);
-                        }
+                        Intent getIntent = new Intent(login_page.this, MapsMainActivity.class);
+
+                        // Use the Intent to start Google Maps application using Activity.startActivity()
+                        startActivity(getIntent);
+
+                        finish();//Finish this activity no going back when signed in 
+
                     }
-                    if (found_flag == false) {
+                    else
+                    {
 
-                        AlertDialog.Builder dlgAlert = new AlertDialog.Builder(login_page.this);
+                        Toast.makeText(getApplicationContext(),
+                                "LOGIN UNSUCCESSFUL username = " + User_Name.getText().toString()+
+                                ", stored params ="+appSetting.getName(),
+                                Toast.LENGTH_LONG).show();
 
-                        dlgAlert.setMessage("wrong password or username");
-                        dlgAlert.setTitle("Error Message...");
-                        dlgAlert.setPositiveButton("OK", null);
-                        dlgAlert.setCancelable(true);
-                        dlgAlert.create().show();
 
-                        dlgAlert.setPositiveButton("Ok",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getApplicationContext(), "Name = :"+appSetting.getName()+
+                                " pswd : "+appSetting.getPassword(), Toast.LENGTH_LONG).show();
 
-                                    }
-                                });
                     }
+
+
 
                 } catch (Exception e) {
-
+                String a = "hello";
                 }
             }
         });

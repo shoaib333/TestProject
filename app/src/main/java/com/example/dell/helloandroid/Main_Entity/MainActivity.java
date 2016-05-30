@@ -4,17 +4,15 @@ package com.example.dell.helloandroid.Main_Entity;
 /*Android Imports*/
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.database.Cursor;
-import android.net.Uri;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.ContactsContract;
+import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.PhoneStateListener;
@@ -38,7 +36,7 @@ import java.util.ArrayList;
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
-
+    public static final String PREFS_NAME = "MyPrefsFile";
     private BluetoothAdapter mBluetoothAdapter = null;
     private BTConnectionThread mBluetoothConnection = null;
 
@@ -90,6 +88,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+
+        settings = getSharedPreferences(PREFS_NAME, 0);
+
+
+
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
