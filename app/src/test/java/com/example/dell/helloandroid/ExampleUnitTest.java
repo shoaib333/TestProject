@@ -1,4 +1,4 @@
-package com.example.dell.helloandroid;
+package com.idea.meter;
 
 import org.junit.Test;
 
