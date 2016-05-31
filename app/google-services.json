@@ -1,0 +1,53 @@
+{
+  "project_info": {
+    "project_number": "1053327015296",
+    "project_id": "ideameter-86db5"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1053327015296:android:4ddbf0ad2301bafd",
+        "android_client_info": {
+          "package_name": "com.idea.meter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1053327015296-j6tlo02e32fpq5n43b9dt63lid8etdbk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.idea.meter",
+            "certificate_hash": "690137A56F12D79958854F8F158914FEBF5EF906"
+          }
+        },
+        {
+          "client_id": "1053327015296-sk8inggjsspv01nn3j2rdd7nhrgniirl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADcZnmTWUK1Y2nGlh01CvLeb9Y3IYcblM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1053327015296-sk8inggjsspv01nn3j2rdd7nhrgniirl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
