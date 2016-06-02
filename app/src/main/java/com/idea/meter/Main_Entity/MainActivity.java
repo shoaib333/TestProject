@@ -62,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
     public static final int SMS_RECEIVED = 5;
 
 
+    Button BT_device_button;
+
     /* Broadcast Receiver for smsBroadcast */
     private BroadcastReceiver smsReceiver = new BroadcastReceiver() {
         @Override
@@ -105,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.bluetooth_device_layout);
-        final Button BT_device_button = (Button) findViewById(R.id.BTdeviceButton);
+        Button BT_device_button = (Button) findViewById(R.id.BTdeviceButton);
         Toast.makeText(getApplicationContext(),"Application is turned ON", Toast.LENGTH_LONG).show();
 
         /* Create a LocalBroadcast Manager */
@@ -132,10 +134,24 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        BT_device_button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+        BT_device_button.setOnClickListener(btListener);
 
-                pairedDevices = mBluetoothAdapter.getBondedDevices();
+
+        /* Register the smsBroadcast Reciever */
+        IntentFilter filter = new IntentFilter();
+
+        /* Add the Action for which the Listener will listen to */
+        filter.addAction(SmsBroadcastReceiver.BROADCAST_ACTION);
+
+        /* Register the Broadcast receiver against the BROADCAST_ACTION */
+        registerReceiver(smsReceiver, filter);
+
+        }
+
+    View.OnClickListener btListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            pairedDevices = mBluetoothAdapter.getBondedDevices();
 
                 discoverableDeviceList = new ArrayList<String>();
 
@@ -152,23 +168,9 @@ public class MainActivity extends AppCompatActivity {
                 showDevicesIntent.putStringArrayListExtra("devices", discoverableDeviceList);
 
                 /* Start the other Activity */
-                startActivityForResult(showDevicesIntent, REQUEST_BLUETOOTH);
-
-            }
-
-        });
-
-
-        /* Register the smsBroadcast Reciever */
-        IntentFilter filter = new IntentFilter();
-
-        /* Add the Action for which the Listener will listen to */
-        filter.addAction(SmsBroadcastReceiver.BROADCAST_ACTION);
-
-        /* Register the Broadcast receiver against the BROADCAST_ACTION */
-        registerReceiver(smsReceiver, filter);
-
+            startActivityForResult(showDevicesIntent, REQUEST_BLUETOOTH);
         }
+    };
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
