@@ -20,18 +20,21 @@ import com.idea.meter.Startup_Pages.login_page;
 
 public class signup extends login_page {
     public static final String PREFS_NAME = "MyPrefsFile";
-
+    Button app_signup;
+    EditText User_Name;
+    EditText Password;
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_signup);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final Button app_signup = (Button) findViewById(R.id.signup_create);
-        final EditText User_Name = (EditText) findViewById(R.id.new_user_name);
-        final EditText Password = (EditText) findViewById(R.id.new_password);
+        app_signup = (Button) findViewById(R.id.signup_create);
+        User_Name = (EditText) findViewById(R.id.new_user_name);
+        Password = (EditText) findViewById(R.id.new_password);
 
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -40,16 +43,24 @@ public class signup extends login_page {
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        fab.setOnClickListener(fabListener);
 
         app_signup.setOnClickListener(new View.OnClickListener() {
 
+            public void onClick(View v) {
+
+            }
+        });
+    }
+    View.OnClickListener fabListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        }
+    };
+    View.OnClickListener signupListener = new View.OnClickListener() {
+        @Override
             public void onClick(View v) {
                 try {
                     String u_n = User_Name.getText().toString();
@@ -104,7 +115,5 @@ public class signup extends login_page {
                             e.getMessage().toString(), Toast.LENGTH_LONG).show();
                 }
             }
-        });
-    }
-
+    };
 }
