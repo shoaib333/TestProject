@@ -3,8 +3,10 @@ package com.idea.meter.Blutooth_Entity;
 /* Android Imports*/
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.IBinder;
 import android.widget.Toast;
 

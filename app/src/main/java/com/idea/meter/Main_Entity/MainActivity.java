@@ -87,6 +87,25 @@ public class MainActivity extends AppCompatActivity {
     };
 
 
+    /* Broadcast Receiver for listening of Bluetooth States */
+    private final BroadcastReceiver btReceiver = new BroadcastReceiver() {
+        public void onReceive (Context context, Intent intent) {
+            String action = intent.getAction();
+
+            if (BluetoothAdapter.ACTION_STATE_CHANGED.equals(action)) {
+                if(intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, -1)
+                        == BluetoothAdapter.STATE_OFF) {
+
+                    /* TODO: Bluetooth is disconnected, do handling here */
+                    Toast.makeText(getApplicationContext(),"Bluetooth disconnected", Toast.LENGTH_LONG).show();
+
+                }
+            }
+
+        }
+
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,6 +128,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.bluetooth_device_layout);
         Button BT_device_button = (Button) findViewById(R.id.BTdeviceButton);
         Toast.makeText(getApplicationContext(),"Application is turned ON", Toast.LENGTH_LONG).show();
+
+        /* Register Bluetooth Status Reciever for listening to State Changes */
+        registerReceiver(btReceiver, new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED));
 
         /* Create a LocalBroadcast Manager */
         LocalBroadcastManager.getInstance(this).registerReceiver(smsReceiver,

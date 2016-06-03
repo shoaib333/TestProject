@@ -29,7 +29,7 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/meter_logo"
-        android:label="Idea Meter"
+        android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
@@ -47,17 +47,17 @@
 
         <activity
             android:name=".LocationServices_Entity.MapsMainActivity"
-            android:label="IdeaMeter"
+            android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".LocationServices_Entity.MapsActivity"
-            android:label="IdeaMeter" />
+            android:label="@string/app_name" >
         <activity
             android:name=".Main_Entity.MainActivity"
-            android:label="IdeaMeter" />
+            android:label="@string/app_name" >
         <activity
             android:name=".Blutooth_Entity.ShowBTdevices"
-            android:label="IdeaMeter" />
+            android:label="@string/app_name" >
 
         <!--<receiver-->
             <!--android:name=".SMS_Entity.SmsBroadcastReceiver"-->
@@ -73,7 +73,7 @@
 
         <activity
             android:name=".Startup_Pages.login_page"
-            android:label="IdeaMeter"
+            android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <!--
              ATTENTION: This was auto-generated to add Google Play services to your project for
@@ -89,7 +89,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Startup_Pages.splash"
-            android:label="IdeaMeter"
+            android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
