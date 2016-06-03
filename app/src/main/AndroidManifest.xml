@@ -51,13 +51,13 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".LocationServices_Entity.MapsActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" />
         <activity
             android:name=".Main_Entity.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" />
         <activity
             android:name=".Blutooth_Entity.ShowBTdevices"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" />
 
         <!--<receiver-->
             <!--android:name=".SMS_Entity.SmsBroadcastReceiver"-->

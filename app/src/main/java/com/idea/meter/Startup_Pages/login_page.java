@@ -20,7 +20,6 @@ import com.idea.meter.SignUp.signup;
 
 public class login_page extends AppCompatActivity {
 
-    protected static DataBaseHandler database;
     static int user_count=0;
     Button fb_login;
     Button gm_login;
@@ -45,144 +44,38 @@ public class login_page extends AppCompatActivity {
         toolbar.setTitle("IdeaMeter");
 //        toolbar.setBackgroundColor(Color.parseColor("#FF64FFB7"));
         toolbar.inflateMenu(R.menu.login_menu);
-        toolbar.setOnMenuItemClickListener(toolListener);
 
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
-        database = new DataBaseHandler(this);
 
         /**
          * CRUD Operations
          * */
-        fb_login.setOnClickListener(fLoginListener);
 
-        gm_login.setOnClickListener(gLoginListener);
+        toolbar.setOnMenuItemClickListener(
+                new Toolbar.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        // Handle menu item click event
+                        switch (item.getItemId()) {
+                            //Change the ImageView image source depends on menu item click
+                            case R.id.about_idealojy:
+                                Intent getIntent = new Intent(login_page.this, about_idealojy.class);
 
-        app_login.setOnClickListener(aLoginListener);
-
-        app_signup.setOnClickListener(aSignupListener);
-
-        fab.setOnClickListener(fabListener);
-    }
-    protected View.OnClickListener fabListener = new View.OnClickListener() {
-        public void onClick(View v) {
-            Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
-        }
-    };
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.login_menu, menu);
-        return true;
-    }
-    protected View.OnClickListener gLoginListener = new View.OnClickListener() {
-        public void onClick(View v) {
-            try {
-                Intent getIntent = new Intent(login_page.this, MapsMainActivity.class);
-
-                // Use the Intent to start Google Maps application using Activity.startActivity()
-                startActivity(getIntent);
-
-            } catch (Exception e) {
-
-            }
-        }
-    };
-    protected View.OnClickListener fLoginListener = new View.OnClickListener() {
-        public void onClick(View v) {
-            try {
-                Intent getIntent = new Intent(login_page.this, MapsMainActivity.class);
-
-                // Use the Intent to start Google Maps application using Activity.startActivity()
-                startActivity(getIntent);
-
-            } catch (Exception e) {
-
-            }
-        }
-    };
-
-    protected View.OnClickListener aLoginListener = new View.OnClickListener() {
-        public void onClick(View v) {
-            try {
-
-                List<Contact> contacts = database.getAllContacts();
-                boolean found_flag = false;
-
-                for (Contact cn : contacts) {
-                    String log = "Id: "+cn.getID()+" ,Name: " + cn.getName() + " ,Phone: " + cn.getPhoneNumber();
-                    // Writing Contacts to log
-                    Log.d("Name: ", log);
-                    if(User_Name.getText().toString().equals(cn.getName()) && Password.getText().toString().equals(cn.getPhoneNumber()))
-                    {
-                        found_flag = true;
-                        Intent getIntent = new Intent(login_page.this, MapsMainActivity.class);
-                        // Use the Intent to start Google Maps application using Activity.startActivity()
-                        startActivity(getIntent);
+                                // Use the Intent to start Google Maps application using Activity.startActivity()
+                                startActivity(getIntent);
+                                return true;
+                            case R.id.clear_db:
+                                //database.delete_all_contacts();
+                                return true;
+                            case R.id.about_ideaMeter:
+                                return true;
+                            case R.id.meter_settings:
+                                return true;
+                        }
+                        return true;
                     }
-                }
-                if (found_flag == false) {
-
-                    AlertDialog.Builder dlgAlert = new AlertDialog.Builder(login_page.this);
-                    dlgAlert.setMessage("wrong password or username");
-                    dlgAlert.setTitle("Error Message...");
-                    dlgAlert.setPositiveButton("OK", null);
-                    dlgAlert.setCancelable(true);
-                    dlgAlert.create().show();
-                    dlgAlert.setPositiveButton("Ok",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                }
-                            });
-                }
-
-            } catch (Exception e) {
-
-            }
-        }
-    };
-
-    protected View.OnClickListener aSignupListener = new View.OnClickListener() {
-        public void onClick(View v) {
-                try {
-                    Intent getIntent = new Intent(login_page.this, signup.class);
-
-                    // Use the Intent to start Google Maps application using Activity.startActivity()
-                    startActivity(getIntent);
-
-                } catch (Exception e) {
-
-                }
-            }
-    };
-
-    Toolbar.OnMenuItemClickListener toolListener = new Toolbar.OnMenuItemClickListener() {
-        @Override
-        public boolean onMenuItemClick(MenuItem item) {
-            /* Handle menu item click event */
-            switch (item.getItemId()) {
-                //Change the ImageView image source depends on menu item click
-                case R.id.about_idealojy:
-                    Intent getIntent = new Intent(login_page.this, about_idealojy.class);
-
-                    // Use the Intent to start Google Maps application using Activity.startActivity()
-                    startActivity(getIntent);
-                    return true;
-                case R.id.clear_db:
-                    database.delete_all_contacts();
-                    return true;
-                case R.id.about_ideaMeter:
-                    return true;
-                case R.id.meter_settings:
-                    return true;
-            }
-            return true;
-        }
-    };
+                });
 
         fb_login.setOnClickListener(new View.OnClickListener() {
 
