@@ -30,6 +30,16 @@ public class MapsMainActivity extends AppCompatActivity {
     private TextView myLatView;
     private TextView myLongView;
 
+    Button map_button;
+    Button BT_button;
+    Button sms_button;
+
+    EditText source_addrText;
+    EditText destination_addrText;
+    Toolbar toolbar_main;
+
+    SmsBroadcastReceiver smsBroadcastReceiver;
+
     private Location myBestReading;
     private LocationManager myLocationManager;
     private LocationListener myLocationListener;
@@ -42,32 +52,35 @@ public class MapsMainActivity extends AppCompatActivity {
         /* Set Layout of the App */
         setContentView(R.layout.activity_main);
 
-        final Toolbar toolbar_main = (Toolbar) findViewById(R.id.toolbar);
+        toolbar_main = (Toolbar) findViewById(R.id.toolbar);
 
         /* Initialize UI elements */
-        final EditText source_addrText = (EditText) findViewById(R.id.source_location);
-        final EditText destination_addrText = (EditText) findViewById(R.id.destination_location);
+        source_addrText = (EditText) findViewById(R.id.source_location);
+        destination_addrText = (EditText) findViewById(R.id.destination_location);
 
-        /* Create a Button */
-        final Button map_button = (Button) findViewById(R.id.mapButton);
 
-        final Button BT_button = (Button) findViewById(R.id.btButton);
-
-        final Button sms_button = (Button) findViewById(R.id.smsButton);
-
-        final SmsBroadcastReceiver smsBroadcastReceiver = new SmsBroadcastReceiver();
+        map_button = (Button) findViewById(R.id.mapButton);
+        BT_button = (Button) findViewById(R.id.btButton);
+        sms_button = (Button) findViewById(R.id.smsButton);
+        smsBroadcastReceiver = new SmsBroadcastReceiver();
 
         toolbar_main.setTitle("IdeaMeter");
         toolbar_main.inflateMenu(R.menu.personal_screen);
 
-        toolbar_main.setOnMenuItemClickListener(
-                new Toolbar.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
+        toolbar_main.setOnMenuItemClickListener(toolListener);
 
-                        /* Handle menu item click event */
-                        switch (item.getItemId()) {
+        map_button.setOnClickListener(mapListener);
 
+        BT_button.setOnClickListener(BT_Listener);
+
+        sms_button.setOnClickListener(smsListener);
+    }
+
+    Toolbar.OnMenuItemClickListener toolListener = new Toolbar.OnMenuItemClickListener() {
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            /* Handle menu item click event */
+            switch (item.getItemId()) {
                             /* Change the ImageView image source depends on menu item click */
                             case R.id.logout:
 
@@ -76,60 +89,12 @@ public class MapsMainActivity extends AppCompatActivity {
                                 startActivity(getIntent);
                                 finish(); /* call this to finish the current activity */
 
-                                return true;
-                        }
-                        return true;
-                    }
-                });
-
-        map_button.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                try {
-                    String source_address = source_addrText.getText().toString();
-                    String destination_address = destination_addrText.getText().toString();
-
-                    source_address = source_address.replace(' ', '+');
-                    destination_address = destination_address.replace(' ', '+');
-                    Intent getIntent = new Intent(MapsMainActivity.this, MapsActivity.class);
-
-                    /* Use the Intent to start Google Maps application using Activity.startActivity() */
-                    startActivity(getIntent);
-
-                } catch (Exception e) {
-
-                }
+                    return true;
             }
-        });
+            return true;
+        }
+    };
 
-        BT_button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                try {
-                    Intent getIntent = new Intent(MapsMainActivity.this, MainActivity.class);
-
-                    /* Start the Main Activity to Start BT Service */
-                    startActivity(getIntent);
-                } catch (Exception e) {
-
-                }
-            }
-        });
-
-        sms_button.setOnClickListener(new View.OnClickListener(){
-            public void onClick (View v){
-                try{
-                    Intent getIntent = new Intent(MapsMainActivity.this, SmsBroadcastReceiver.class);
-
-                    /* Register SmsBroadcast Receiver to Read SMS */
-                    registerReceiver(smsBroadcastReceiver, new IntentFilter("android.provider.Telephony.SMS_RECEIVED"));
-
-                    Toast.makeText(getBaseContext(), "SMS Reading On", Toast.LENGTH_SHORT).show();
-                } catch (Exception e){
-
-                }
-            }
-        });
-    }
 
     public boolean onKeyDown(int keyCode, KeyEvent event)
     {
@@ -140,5 +105,54 @@ public class MapsMainActivity extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+    View.OnClickListener smsListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            try{
+                Intent getIntent = new Intent(MapsMainActivity.this, SmsBroadcastReceiver.class);
+                    /* Register SmsBroadcast Receiver to Read SMS */
+                registerReceiver(smsBroadcastReceiver, new IntentFilter("android.provider.Telephony.SMS_RECEIVED"));
+
+                Toast.makeText(getBaseContext(), "SMS Reading On", Toast.LENGTH_SHORT).show();
+            } catch (Exception e){
+
+            }
+        }
+    };
+
+    View.OnClickListener BT_Listener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            try {
+                Intent getIntent = new Intent(MapsMainActivity.this, MainActivity.class);
+                startActivity(getIntent);
+            } catch (Exception e) {
+
+            }
+        }
+    };
+
+    View.OnClickListener mapListener = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v) {
+            try {
+                String source_address = source_addrText.getText().toString();
+                String destination_address = destination_addrText.getText().toString();
+
+                source_address = source_address.replace(' ', '+');
+                destination_address = destination_address.replace(' ', '+');
+                Intent getIntent = new Intent(getApplicationContext(), MapsActivity.class);
+                getIntent.putExtra("source",source_address+" ");
+                getIntent.putExtra("destination", destination_address+" ");
+                    /* Use the Intent to start Google Maps application using Activity.startActivity() */
+                startActivity(getIntent);
+
+            } catch (Exception e) {
+
+            }
+        }
+    };
+
 }
 
