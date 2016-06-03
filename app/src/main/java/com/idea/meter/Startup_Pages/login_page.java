@@ -21,19 +21,25 @@ import com.idea.meter.SignUp.signup;
 public class login_page extends AppCompatActivity {
 
     static int user_count=0;
-
+    Button fb_login;
+    Button gm_login;
+    Button app_login;
+    Button app_signup;
+    Toolbar toolbar;
+    EditText User_Name;
+    EditText Password;
+    FloatingActionButton fab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_page);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
-        Button fb_login = (Button) findViewById(R.id.fb_login);
-        Button gm_login = (Button) findViewById(R.id.gm_login);
-        final Button app_login = (Button) findViewById(R.id.app_login);
-        Button app_signup = (Button) findViewById(R.id.app_signup);
-        final EditText User_Name = (EditText) findViewById(R.id.user_name);
-        final EditText Password = (EditText) findViewById(R.id.password);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        fb_login = (Button) findViewById(R.id.fb_login);
+        gm_login = (Button) findViewById(R.id.gm_login);
+        app_login = (Button) findViewById(R.id.app_login);
+        app_signup = (Button) findViewById(R.id.app_signup);
+        User_Name = (EditText) findViewById(R.id.user_name);
+        Password = (EditText) findViewById(R.id.password);
 
         toolbar.setTitle("IdeaMeter");
 //        toolbar.setBackgroundColor(Color.parseColor("#FF64FFB7"));
