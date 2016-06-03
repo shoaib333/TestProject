@@ -27,6 +27,9 @@ import java.util.UUID;
 public class ShowBTdevices extends ListActivity {
     BluetoothAdapter mBluetoothAdapter = null;
     ArrayAdapter<String> mArrayAdapter = null;
+    ListView lv;
+    TextView footer;
+    List<String> devices;
 
     /* Generic SPP device UUID */
     public static final UUID APP_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
@@ -69,14 +72,14 @@ public class ShowBTdevices extends ListActivity {
 //        setContentView(R.layout.bluetooth_device_layout);
 
         /* Get ListView that will be bound to the ListView in btview.xml file*/
-        final ListView lv = (ListView) getListView();
-        final TextView footer = new TextView(this);
+        lv = (ListView) getListView();
+        footer = new TextView(this);
         footer.setText("Discover More Devices");
         lv.setFooterDividersEnabled(true);
         lv.addFooterView(footer, null, true);
 
         /* Create List to save devices found by Bluetooth */
-        final List<String> devices = getIntent().getStringArrayListExtra("devices");
+        devices = getIntent().getStringArrayListExtra("devices");
 
         /* Create ArrayAdapter that bounds the Bluetooth device list with the ListView of btview.xml */
         mArrayAdapter = new ArrayAdapter<String>(this, R.layout.btview,devices);
@@ -85,11 +88,13 @@ public class ShowBTdevices extends ListActivity {
         setListAdapter(mArrayAdapter);
 
         /* Implement the onClickListener for the List Adapter */
-        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int pos,long id) {
+        getListView().setOnItemClickListener(clickListener);
+    }
 
-                if (parent.getAdapter().getItemViewType(pos) == AdapterView.ITEM_VIEW_TYPE_HEADER_OR_FOOTER) {
+    AdapterView.OnItemClickListener clickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
+            if (parent.getAdapter().getItemViewType(pos) == AdapterView.ITEM_VIEW_TYPE_HEADER_OR_FOOTER) {
 
                     /* Start Bluetooth Discovery */
                     mBluetoothAdapter.startDiscovery();
@@ -119,9 +124,7 @@ public class ShowBTdevices extends ListActivity {
 
             } /* onClick */
 
-        });
-    }
-
+    };
     protected void onResume() {
         super.onResume();
 
