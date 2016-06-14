@@ -41,7 +41,7 @@ public class login_page extends AppCompatActivity {
         User_Name = (EditText) findViewById(R.id.user_name);
         Password = (EditText) findViewById(R.id.password);
 
-        toolbar.setTitle("IdeaMeter");
+        toolbar.setTitle(R.string.app_name);
 //        toolbar.setBackgroundColor(Color.parseColor("#FF64FFB7"));
         toolbar.inflateMenu(R.menu.login_menu);
 
