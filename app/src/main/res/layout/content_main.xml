@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/MainScreenLayout"
-    android:layout_below="@id/toolbar_layout"
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="wrap_content">
@@ -12,7 +11,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_marginTop="80dp"
+        android:paddingLeft="10dp"
+        android:ems="10"
         android:hint="@string/source_location_string"
+        android:background="@drawable/textbar_bg"
         android:inputType="textPostalAddress" />
 
     <EditText
@@ -21,7 +23,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/source_location"
         android:layout_alignParentLeft="true"
+        android:paddingLeft="10dp"
+        android:ems="10"
         android:hint="@string/destination_location_string"
+        android:background="@drawable/textbar_bg"
         android:inputType="textPostalAddress" />
 
 
@@ -35,11 +40,24 @@
 
     <Button
         android:id="@+id/btButton"
+        android:background="@drawable/button_bg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/mapButton"
+        android:layout_weight="1"
         android:layout_centerHorizontal="true"
-        android:text="@string/open_bt_string" />
+        android:text="@string/main_activity_view_meters" />
+
+
+    <Button
+        android:id="@+id/settingsButton"
+        android:background="@drawable/button_bg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btButton"
+        android:layout_weight="1"
+        android:layout_centerHorizontal="true"
+        android:text="@string/main_activity_settings" />
 
     <Button
         android:id="@+id/smsButton"
@@ -48,4 +66,5 @@
         android:layout_below="@+id/btButton"
         android:layout_centerHorizontal="true"
         android:text="@string/recieve_sms_string" />
+
 </RelativeLayout>
