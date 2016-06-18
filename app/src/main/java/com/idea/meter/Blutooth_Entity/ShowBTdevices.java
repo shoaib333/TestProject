@@ -78,6 +78,9 @@ public class ShowBTdevices extends ListActivity {
         lv.setFooterDividersEnabled(true);
         lv.addFooterView(footer, null, true);
 
+        /* setBackground Image for the List View */
+        lv.setBackgroundResource(R.drawable.device_bg);
+
         /* Create List to save devices found by Bluetooth */
         devices = getIntent().getStringArrayListExtra("devices");
 
@@ -94,6 +97,7 @@ public class ShowBTdevices extends ListActivity {
     AdapterView.OnItemClickListener clickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
+            parent.getChildAt(pos).setBackgroundResource(R.drawable.device_bg);
             if (parent.getAdapter().getItemViewType(pos) == AdapterView.ITEM_VIEW_TYPE_HEADER_OR_FOOTER) {
 
                     /* Start Bluetooth Discovery */

@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.idea.meter.Main_Entity.AddRemoveMetersActivity;
 import com.idea.meter.Main_Entity.MainActivity;
 import com.idea.meter.R;
 import com.idea.meter.SMS_Entity.SmsBroadcastReceiver;
@@ -36,6 +37,7 @@ public class MapsMainActivity extends AppCompatActivity {
     Button map_button;
     Button BT_button;
     Button sms_button;
+    Button arDevice_Button;
 
     EditText source_addrText;
     EditText destination_addrText;
@@ -65,25 +67,26 @@ public class MapsMainActivity extends AppCompatActivity {
         toolbar_main = (Toolbar) findViewById(R.id.toolbar);
 
         /* Initialize UI elements */
-        source_addrText = (EditText) findViewById(R.id.source_location);
-        destination_addrText = (EditText) findViewById(R.id.destination_location);
 
-
-        map_button = (Button) findViewById(R.id.mapButton);
+//        map_button = (Button) findViewById(R.id.mapButton);
         BT_button = (Button) findViewById(R.id.btButton);
-        sms_button = (Button) findViewById(R.id.smsButton);
+        arDevice_Button = (Button) findViewById(R.id.addRemDeviceButton);
+
+//        sms_button = (Button) findViewById(R.id.smsButton);
         smsBroadcastReceiver = new SmsBroadcastReceiver();
 
         toolbar_main.setTitle("ideaMeter");
         toolbar_main.inflateMenu(R.menu.personal_screen);
 
+        /* Set onClickListeners here */
         toolbar_main.setOnMenuItemClickListener(toolListener);
 
-        map_button.setOnClickListener(mapListener);
+//        map_button.setOnClickListener(mapListener);
 
         BT_button.setOnClickListener(BT_Listener);
+        arDevice_Button.setOnClickListener(arDevice_Listener);
 
-        sms_button.setOnClickListener(smsListener);
+//        sms_button.setOnClickListener(smsListener);
     }
 
     Toolbar.OnMenuItemClickListener toolListener = new Toolbar.OnMenuItemClickListener() {
@@ -115,6 +118,7 @@ public class MapsMainActivity extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
     View.OnClickListener smsListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -214,6 +218,21 @@ public class MapsMainActivity extends AppCompatActivity {
 
                 startActivity(getIntent);
             } catch (Exception e) {
+
+            }
+        }
+    };
+
+    View.OnClickListener arDevice_Listener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            try{
+
+                Intent getIntent = new Intent(MapsMainActivity.this, AddRemoveMetersActivity.class);
+
+                startActivity(getIntent);
+
+            } catch (Exception e){
 
             }
         }

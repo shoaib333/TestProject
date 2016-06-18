@@ -4,6 +4,7 @@
     <string name="show_map_string">Open Map</string>
     <string name="open_bt_string">Start Bluetooth</string>
     <string name="recieve_sms_string">Allow SMS</string>
+    <string name="alarm_notification_string">Alarms/Notifications</string>
     <string name="source_location_string">Enter Source Location</string>
     <string name="destination_location_string">Enter Destination Location</string>
     <string name="title_activity_maps">Meter Maps</string>
@@ -14,5 +15,7 @@
     <string name="main_activity_view_meters">View Meters</string>
     <string name="main_activity_armeeter">Add/Remove Meters</string>
     <string name="main_activity_settings">Settings</string>
-    <string name="main_activity_alarm">Alarms Notifications</string>
+    <string name="main_activity_alarm">Alarms/Notifications</string>
+    <string name="title_activity_add_remove_meters">AddRemoveMetersActivity</string>
+
 </resources>
