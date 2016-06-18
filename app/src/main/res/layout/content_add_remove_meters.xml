@@ -17,6 +17,8 @@
         android:layout_width="wrap_content"
         android:layout_height="80dp"
         android:background="@drawable/titlebar_bg"
+        android:textSize="48dp"
+        android:textColor="@color/colorPrimaryDark"
         android:layout_centerHorizontal="true"
         android:text="Select Meter" />
 

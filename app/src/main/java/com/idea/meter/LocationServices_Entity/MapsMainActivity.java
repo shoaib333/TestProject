@@ -35,9 +35,9 @@ public class MapsMainActivity extends AppCompatActivity {
     private TextView myLongView;
 
     Button map_button;
-    Button BT_button;
+    Button arBT_button;
     Button sms_button;
-    Button arDevice_Button;
+    Button viewDevice_Button;
 
     EditText source_addrText;
     EditText destination_addrText;
@@ -69,8 +69,8 @@ public class MapsMainActivity extends AppCompatActivity {
         /* Initialize UI elements */
 
 //        map_button = (Button) findViewById(R.id.mapButton);
-        BT_button = (Button) findViewById(R.id.btButton);
-        arDevice_Button = (Button) findViewById(R.id.addRemDeviceButton);
+        arBT_button = (Button) findViewById(R.id.addRemDeviceButton);
+        viewDevice_Button = (Button) findViewById(R.id.btButton);
 
 //        sms_button = (Button) findViewById(R.id.smsButton);
         smsBroadcastReceiver = new SmsBroadcastReceiver();
@@ -83,8 +83,8 @@ public class MapsMainActivity extends AppCompatActivity {
 
 //        map_button.setOnClickListener(mapListener);
 
-        BT_button.setOnClickListener(BT_Listener);
-        arDevice_Button.setOnClickListener(arDevice_Listener);
+        arBT_button.setOnClickListener(arBT_Listener);
+        viewDevice_Button.setOnClickListener(viewDevice_Listener);
 
 //        sms_button.setOnClickListener(smsListener);
     }
@@ -162,7 +162,7 @@ public class MapsMainActivity extends AppCompatActivity {
         }
     };
 
-    View.OnClickListener BT_Listener = new View.OnClickListener() {
+    View.OnClickListener arBT_Listener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             try {
@@ -223,7 +223,7 @@ public class MapsMainActivity extends AppCompatActivity {
         }
     };
 
-    View.OnClickListener arDevice_Listener = new View.OnClickListener() {
+    View.OnClickListener viewDevice_Listener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             try{
