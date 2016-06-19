@@ -118,6 +118,24 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.idea.meter.Main_Entity.AddRemoveMetersActivity" />
         </activity>
+        <activity
+            android:name=".Settings.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".LocationServices_Entity.MapsMainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.idea.meter.LocationServices_Entity.MapsMainActivity" />
+        </activity>
+        <activity
+            android:name=".Settings.AlarmNotificationActivity"
+            android:label="@string/title_activity_alarm_notification"
+            android:parentActivityName=".LocationServices_Entity.MapsMainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.idea.meter.LocationServices_Entity.MapsMainActivity" />
+        </activity>
     </application>
 
 </manifest>

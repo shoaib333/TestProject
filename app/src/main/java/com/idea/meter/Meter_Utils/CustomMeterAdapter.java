@@ -82,10 +82,9 @@ public class CustomMeterAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(context, "You Clicked "+result[position], Toast.LENGTH_LONG).show();
-
                 String data = result[position];
 
+                /* Send the selected Meter Name back to AddRemoveMetersActivity */
                 mDeviceSelectHandler.obtainMessage(AddRemoveMetersActivity.DEVICE_SELECTED, data).sendToTarget();
             }
         });
