@@ -109,6 +109,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.idea.meter.Main_Entity.MainActivity" />
         </activity>
+        <activity
+            android:name=".Meter_Utils.MeterStatsActivity"
+            android:label="@string/title_activity_meter_stats"
+            android:parentActivityName=".Main_Entity.AddRemoveMetersActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.idea.meter.Main_Entity.AddRemoveMetersActivity" />
+        </activity>
     </application>
 
 </manifest>

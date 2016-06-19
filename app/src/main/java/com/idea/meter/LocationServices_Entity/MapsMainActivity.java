@@ -251,7 +251,8 @@ public class MapsMainActivity extends AppCompatActivity {
                 Intent getIntent = new Intent(getApplicationContext(), MapsActivity.class);
                 getIntent.putExtra("source",source_address+" ");
                 getIntent.putExtra("destination", destination_address+" ");
-                    /* Use the Intent to start Google Maps application using Activity.startActivity() */
+
+                /* Use the Intent to start Google Maps application using Activity.startActivity() */
                 startActivity(getIntent);
 
             } catch (Exception e) {

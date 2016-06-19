@@ -17,5 +17,6 @@
     <string name="main_activity_settings">Settings</string>
     <string name="main_activity_alarm">Alarms/Notifications</string>
     <string name="title_activity_add_remove_meters">AddRemoveMetersActivity</string>
+    <string name="title_activity_meter_stats">MeterStatsActivity</string>
 
 </resources>

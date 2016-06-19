@@ -30,6 +30,7 @@ public class ShowBTdevices extends ListActivity {
     ListView lv;
     TextView footer;
     List<String> devices;
+    int devCount = 0;
 
     /* Generic SPP device UUID */
     public static final UUID APP_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
@@ -50,8 +51,15 @@ public class ShowBTdevices extends ListActivity {
 
                 /* Add the name and address to an array adapter to show in a ListView */
                 System.out.println(device.getName());
+
                 mArrayAdapter.add(device.getName() + "\n" + device.getAddress() + "\n" + rssi);
                 Log.d("Device name:", device.getName());
+            }
+
+            /* */
+            for (int i = 0;i <= (devices.size() - devCount);i++ ) {
+                lv.getChildAt(devCount++).setBackgroundResource(R.drawable.device_bg);
+
             }
 
             /* Register the BroadcastReceiver*/
@@ -79,7 +87,7 @@ public class ShowBTdevices extends ListActivity {
         lv.addFooterView(footer, null, true);
 
         /* setBackground Image for the List View */
-        lv.setBackgroundResource(R.drawable.device_bg);
+//        lv.setBackgroundResource(R.drawable.device_bg);
 
         /* Create List to save devices found by Bluetooth */
         devices = getIntent().getStringArrayListExtra("devices");
@@ -92,12 +100,13 @@ public class ShowBTdevices extends ListActivity {
 
         /* Implement the onClickListener for the List Adapter */
         getListView().setOnItemClickListener(clickListener);
+
+
     }
 
     AdapterView.OnItemClickListener clickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-            parent.getChildAt(pos).setBackgroundResource(R.drawable.device_bg);
             if (parent.getAdapter().getItemViewType(pos) == AdapterView.ITEM_VIEW_TYPE_HEADER_OR_FOOTER) {
 
                     /* Start Bluetooth Discovery */

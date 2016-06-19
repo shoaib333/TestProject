@@ -175,21 +175,21 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             pairedDevices = mBluetoothAdapter.getBondedDevices();
 
-                discoverableDeviceList = new ArrayList<String>();
+            discoverableDeviceList = new ArrayList<String>();
 
-                if (pairedDevices.size() > 0) {
-                    for (BluetoothDevice bt : pairedDevices) {
-                        discoverableDeviceList.add(bt.getName() + "\n" + bt.getAddress());
-                    }
+            if (pairedDevices.size() > 0) {
+                for (BluetoothDevice bt : pairedDevices) {
+                    discoverableDeviceList.add(bt.getName() + "\n" + bt.getAddress());
                 }
+            }
 
-                /* Create Intent to be passed to the BT device list */
-                Intent showDevicesIntent = new Intent(MainActivity.this, ShowBTdevices.class);
+            /* Create Intent to be passed to the BT device list */
+            Intent showDevicesIntent = new Intent(MainActivity.this, ShowBTdevices.class);
 
-                /* Add the BT device list Strings to the Intent */
-                showDevicesIntent.putStringArrayListExtra("devices", discoverableDeviceList);
+            /* Add the BT device list Strings to the Intent */
+            showDevicesIntent.putStringArrayListExtra("devices", discoverableDeviceList);
 
-                /* Start the other Activity */
+            /* Start the other Activity */
             startActivityForResult(showDevicesIntent, REQUEST_BLUETOOTH);
         }
     };
@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public Handler mHandler = new Handler() {
+    public Handler mHandler =   new Handler() {
         /* When Task Handler receives an Event */
         @Override
         public void handleMessage(Message msg) {
