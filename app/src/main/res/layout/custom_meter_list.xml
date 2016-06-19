@@ -10,10 +10,10 @@
         android:layout_weight="80"
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
-        android:layout_height="80dp"
+        android:layout_height="45dp"
         android:textColor="@color/colorPrimaryDark"
         android:background="@drawable/titlebar_bg"
-        android:textSize="48dp" />
+        android:textSize="24dp" />
 
     <ImageView
         android:id="@+id/imageView1"
@@ -21,7 +21,7 @@
         android:layout_weight="20"
         android:layout_width="80dp"
         android:layout_centerHorizontal="true"
-        android:layout_height="80dp"
+        android:layout_height="45dp"
         android:background="@drawable/titlebar_bg"
         android:src="@drawable/settings_icon" />
 
