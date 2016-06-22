@@ -18,7 +18,10 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:hint="user name"
+        android:background="@drawable/textbar_bg"
+        android:paddingLeft="10dp"
+        android:ems="10"
+        android:hint="Email"
         android:inputType="textEmailAddress" />
 
     <EditText
@@ -27,54 +30,89 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/user_name"
         android:layout_centerHorizontal="true"
-        android:hint="password"
+        android:background="@drawable/textbar_bg"
+        android:paddingLeft="10dp"
+        android:ems="10"
+        android:hint="Password"
         android:inputType="textPassword" />
 
-    <Button
-        android:id="@+id/fb_login"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/app_login"
-        android:layout_marginTop="146dp"
-        android:layout_marginRight="25dp"
+        android:orientation="horizontal"
         android:layout_centerHorizontal="true"
-        android:text="facebook" />
+        android:layout_below="@+id/password">
 
-    <Button
-        android:id="@+id/gm_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/app_login"
-        android:layout_marginTop="146dp"
-        android:layout_marginLeft="25dp"
-        android:layout_centerHorizontal="true"
-        android:text="gmail" />
+        <Button
+            android:id="@+id/app_login"
+            android:background="@drawable/left_button_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:layout_alignParentLeft="true"
+            android:layout_centerHorizontal="true"
+            android:text="Login" />
 
-    <Button
-        android:id="@+id/app_login"
+        <Button
+            android:id="@+id/app_login_cancel_button"
+            android:background="@drawable/right_button_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentRight="true"
+            android:text="Cancel" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/social_network_login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/password"
-        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
         android:layout_centerHorizontal="true"
-        android:text="login" />
+        android:layout_below="@+id/password">
+
+        <Button
+            android:id="@+id/fb_login"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@drawable/fb_icon"
+            android:layout_marginTop="100dp"
+            android:layout_marginRight="25dp"
+            android:layout_centerHorizontal="true"/>
+
+        <Button
+            android:id="@+id/gm_login"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@drawable/gplus_icon"
+            android:layout_marginTop="100dp"
+            android:layout_marginLeft="25dp"
+            android:layout_centerHorizontal="true"/>
+
+    </LinearLayout>
+
+    <TextView android:id="@+id/signup_help_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/social_network_login_button"
+        android:text="Sign Up, it's free!"
+        android:layout_centerHorizontal="true"/>
+
 
     <Button
         android:id="@+id/app_signup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/app_login"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
+        android:background="@drawable/button_bg"
+        android:layout_below="@+id/signup_help_text"
         android:text="signup" />
-
-    <TextView android:id="@+id/text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/app_login"
-        android:layout_marginStart="115dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="60dp"
-        android:text="Sign Up, it's free!" />
 
 </RelativeLayout>

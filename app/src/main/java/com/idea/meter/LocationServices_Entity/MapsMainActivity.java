@@ -21,9 +21,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.idea.meter.Main_Entity.AddRemoveMetersActivity;
 import com.idea.meter.Main_Entity.MainActivity;
 import com.idea.meter.R;
 import com.idea.meter.SMS_Entity.SmsBroadcastReceiver;
+import com.idea.meter.Settings.AlarmNotificationActivity;
+import com.idea.meter.Settings.SettingsActivity;
 import com.idea.meter.Startup_Pages.login_page;
 
 public class MapsMainActivity extends AppCompatActivity {
@@ -34,8 +37,10 @@ public class MapsMainActivity extends AppCompatActivity {
     private TextView myLongView;
 
     Button map_button;
-    Button BT_button;
-    Button sms_button;
+    Button arBT_button;
+    Button settings_button;
+    Button viewDevice_button;
+    Button alarmNotification_button;
 
     EditText source_addrText;
     EditText destination_addrText;
@@ -65,25 +70,28 @@ public class MapsMainActivity extends AppCompatActivity {
         toolbar_main = (Toolbar) findViewById(R.id.toolbar);
 
         /* Initialize UI elements */
-        source_addrText = (EditText) findViewById(R.id.source_location);
-        destination_addrText = (EditText) findViewById(R.id.destination_location);
 
+//        map_button = (Button) findViewById(R.id.mapButton);
+        arBT_button = (Button) findViewById(R.id.addRemDeviceButton);
+        viewDevice_button = (Button) findViewById(R.id.btButton);
+        settings_button = (Button) findViewById(R.id.settingsButton);
+        alarmNotification_button = (Button) findViewById(R.id.alarmNotifications);
 
-        map_button = (Button) findViewById(R.id.mapButton);
-        BT_button = (Button) findViewById(R.id.btButton);
-        sms_button = (Button) findViewById(R.id.smsButton);
         smsBroadcastReceiver = new SmsBroadcastReceiver();
 
         toolbar_main.setTitle("ideaMeter");
         toolbar_main.inflateMenu(R.menu.personal_screen);
 
+        /* Set onClickListeners here */
         toolbar_main.setOnMenuItemClickListener(toolListener);
 
-        map_button.setOnClickListener(mapListener);
+//        map_button.setOnClickListener(mapListener);
 
-        BT_button.setOnClickListener(BT_Listener);
+        arBT_button.setOnClickListener(arBT_Listener);
+        viewDevice_button.setOnClickListener(viewDevice_Listener);
+        settings_button.setOnClickListener(settingsListener);
+        alarmNotification_button.setOnClickListener(alarmNotificationListener);
 
-        sms_button.setOnClickListener(smsListener);
     }
 
     Toolbar.OnMenuItemClickListener toolListener = new Toolbar.OnMenuItemClickListener() {
@@ -115,6 +123,7 @@ public class MapsMainActivity extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
     View.OnClickListener smsListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -158,7 +167,7 @@ public class MapsMainActivity extends AppCompatActivity {
         }
     };
 
-    View.OnClickListener BT_Listener = new View.OnClickListener() {
+    View.OnClickListener arBT_Listener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             try {
@@ -219,6 +228,52 @@ public class MapsMainActivity extends AppCompatActivity {
         }
     };
 
+    View.OnClickListener viewDevice_Listener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            try{
+
+                Intent getIntent = new Intent(MapsMainActivity.this, AddRemoveMetersActivity.class);
+
+                startActivity(getIntent);
+
+            } catch (Exception e){
+
+            }
+        }
+    };
+
+
+    View.OnClickListener settingsListener= new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            try{
+
+                Intent getIntent = new Intent(MapsMainActivity.this, SettingsActivity.class);
+
+                startActivity(getIntent);
+
+            } catch (Exception e){
+
+            }
+        }
+    };
+
+    View.OnClickListener alarmNotificationListener= new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            try{
+
+                Intent getIntent = new Intent(MapsMainActivity.this, AlarmNotificationActivity.class);
+
+                startActivity(getIntent);
+
+            } catch (Exception e){
+
+            }
+        }
+    };
+
     View.OnClickListener mapListener = new View.OnClickListener()
     {
         @Override
@@ -232,7 +287,8 @@ public class MapsMainActivity extends AppCompatActivity {
                 Intent getIntent = new Intent(getApplicationContext(), MapsActivity.class);
                 getIntent.putExtra("source",source_address+" ");
                 getIntent.putExtra("destination", destination_address+" ");
-                    /* Use the Intent to start Google Maps application using Activity.startActivity() */
+
+                /* Use the Intent to start Google Maps application using Activity.startActivity() */
                 startActivity(getIntent);
 
             } catch (Exception e) {

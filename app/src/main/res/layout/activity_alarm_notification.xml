@@ -5,25 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.idea.meter.Startup_Pages.login_page">
+    tools:context="com.idea.meter.Settings.AlarmNotificationActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:titleTextColor="@color/colorPrimaryDark"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@drawable/titlebar_bg"
-            android:titleTextColor="@color/colorPrimaryDark"
+            android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_login_page" />
+    <include layout="@layout/content_alarm_notification" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

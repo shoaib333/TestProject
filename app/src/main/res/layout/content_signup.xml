@@ -17,26 +17,119 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="90dp"
-        android:hint="user name"
+        android:background="@drawable/textbar_bg"
+        android:paddingLeft="10dp"
+        android:ems="10"
+        android:hint="User Name"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/new_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/textbar_bg"
+        android:paddingLeft="10dp"
+        android:ems="10"
+        android:layout_below="@+id/new_user_name"
+        android:hint="Email"
         android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/new_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/new_user_name"
+        android:layout_below="@+id/new_email"
+        android:background="@drawable/textbar_bg"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="10dp"
+        android:ems="10"
         android:layout_centerHorizontal="true"
-        android:hint="password"
+        android:hint="Password"
         android:inputType="textPassword" />
 
-    <Button
-        android:id="@+id/signup_create"
+    <EditText
+        android:id="@+id/new_user_phone_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/new_password"
-        android:layout_marginTop="15dp"
         android:layout_centerHorizontal="true"
-        android:text="create" />
+        android:layout_marginTop="20dp"
+        android:background="@drawable/textbar_bg"
+        android:paddingLeft="10dp"
+        android:ems="10"
+        android:layout_below="@+id/new_password"
+        android:hint="Phone Number"
+        android:inputType="textEmailAddress" />
+
+    <LinearLayout
+        android:id="@+id/signup_create_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/new_user_phone_number">
+
+        <Button
+            android:id="@+id/signup_create"
+            android:background="@drawable/left_button_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_alignParentLeft="true"
+            android:layout_centerHorizontal="true"
+            android:text="Sign Up" />
+
+        <Button
+            android:id="@+id/signup_create_cancel_button"
+            android:background="@drawable/right_button_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentRight="true"
+            android:text="Cancel" />
+
+    </LinearLayout>
+
+
+    <TextView android:id="@+id/signup_help_text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/signup_create_layout"
+        android:text="Or Sign Up with following:"
+        android:layout_centerHorizontal="true"/>
+
+
+    <LinearLayout
+        android:id="@+id/social_network_signup_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom|end"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/signup_help_text2">
+
+        <Button
+            android:id="@+id/fb_signup"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@drawable/fb_icon"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="25dp"
+            android:layout_centerHorizontal="true"/>
+
+        <Button
+            android:id="@+id/gm_signup"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@drawable/gplus_icon"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="25dp"
+            android:layout_centerHorizontal="true"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

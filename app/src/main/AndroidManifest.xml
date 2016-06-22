@@ -58,13 +58,13 @@
             android:name=".Blutooth_Entity.ShowBTdevices"
             android:label="@string/app_name" />
 
-        <!--<receiver-->
-            <!--android:name=".SMS_Entity.SmsBroadcastReceiver"-->
-            <!--android:exported="true">-->
-            <!--<intent-filter android:priority="999">-->
-                <!--<action android:name="android.provider.Telephony.SMS_RECEIVED" />-->
-            <!--</intent-filter>-->
-        <!--</receiver>-->
+        <!-- <receiver -->
+        <!-- android:name=".SMS_Entity.SmsBroadcastReceiver" -->
+        <!-- android:exported="true"> -->
+        <!-- <intent-filter android:priority="999"> -->
+        <!-- <action android:name="android.provider.Telephony.SMS_RECEIVED" /> -->
+        <!-- </intent-filter> -->
+        <!-- </receiver> -->
 
         <service
             android:name=".Blutooth_Entity.BackgroundServiceBTService"
@@ -73,7 +73,7 @@
         <activity
             android:name=".Startup_Pages.login_page"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <!--
              ATTENTION: This was auto-generated to add Google Play services to your project for
              App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -99,7 +99,43 @@
         <activity
             android:name=".SignUp.signup"
             android:label="@string/title_activity_signup"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Main_Entity.AddRemoveMetersActivity"
+            android:label="@string/title_activity_add_remove_meters"
+            android:parentActivityName=".Main_Entity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.idea.meter.Main_Entity.MainActivity" />
+        </activity>
+        <activity
+            android:name=".Meter_Utils.MeterStatsActivity"
+            android:label="@string/title_activity_meter_stats"
+            android:parentActivityName=".Main_Entity.AddRemoveMetersActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.idea.meter.Main_Entity.AddRemoveMetersActivity" />
+        </activity>
+        <activity
+            android:name=".Settings.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".LocationServices_Entity.MapsMainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.idea.meter.LocationServices_Entity.MapsMainActivity" />
+        </activity>
+        <activity
+            android:name=".Settings.AlarmNotificationActivity"
+            android:label="@string/title_activity_alarm_notification"
+            android:parentActivityName=".LocationServices_Entity.MapsMainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.idea.meter.LocationServices_Entity.MapsMainActivity" />
+        </activity>
     </application>
 
 </manifest>

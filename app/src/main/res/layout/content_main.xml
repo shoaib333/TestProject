@@ -1,51 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/MainScreenLayout"
-    android:layout_below="@id/toolbar_layout"
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/source_location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="80dp"
-        android:hint="@string/source_location_string"
-        android:inputType="textPostalAddress" />
-
-    <EditText
-        android:id="@+id/destination_location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/source_location"
-        android:layout_alignParentLeft="true"
-        android:hint="@string/destination_location_string"
-        android:inputType="textPostalAddress" />
-
-
-    <Button
-        android:id="@+id/mapButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/destination_location"
-        android:layout_centerHorizontal="true"
-        android:text="@string/show_map_string" />
-
     <Button
         android:id="@+id/btButton"
+        android:background="@drawable/button_bg_long"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/mapButton"
+        android:layout_marginTop="80dp"
+        android:layout_weight="1"
         android:layout_centerHorizontal="true"
-        android:text="@string/open_bt_string" />
+        android:text="@string/main_activity_view_meters" />
 
     <Button
-        android:id="@+id/smsButton"
+        android:id="@+id/addRemDeviceButton"
+        android:background="@drawable/button_bg_long"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btButton"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
         android:layout_centerHorizontal="true"
-        android:text="@string/recieve_sms_string" />
+        android:text="@string/main_activity_armeeter" />
+
+    <Button
+        android:id="@+id/settingsButton"
+        android:background="@drawable/button_bg_long"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/addRemDeviceButton"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:layout_centerHorizontal="true"
+        android:text="@string/main_activity_settings" />
+
+    <Button
+        android:id="@+id/alarmNotifications"
+        android:background="@drawable/button_bg_long"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/settingsButton"
+        android:layout_centerHorizontal="true"
+        android:text="@string/main_activity_alarm" />
+
 </RelativeLayout>
