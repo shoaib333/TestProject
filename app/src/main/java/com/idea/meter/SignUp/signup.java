@@ -19,9 +19,12 @@ import com.idea.meter.Startup_Pages.login_page;
 public class signup extends login_page {
     public static final String PREFS_NAME = "MyPrefsFile";
     Button app_signup;
+    Button CancelButton;
+
     EditText User_Name;
     EditText Password;
     Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +34,7 @@ public class signup extends login_page {
         setSupportActionBar(toolbar);
 
         app_signup = (Button) findViewById(R.id.signup_create);
+        CancelButton = (Button) findViewById(R.id.signup_create_cancel_button);
         User_Name = (EditText) findViewById(R.id.new_user_name);
         Password = (EditText) findViewById(R.id.new_password);
 
@@ -38,15 +42,20 @@ public class signup extends login_page {
 
         settings = getSharedPreferences(PREFS_NAME, getApplicationContext().MODE_PRIVATE);
 
-        app_signup.setOnClickListener(new View.OnClickListener() {
+        app_signup.setOnClickListener(signupListener);
+        CancelButton.setOnClickListener(signupCancelListener);
 
-            public void onClick(View v) {
-
-            }
-        });
     }
 
-    View.OnClickListener signupListener = new View.OnClickListener() {
+    Button.OnClickListener signupCancelListener = new View.OnClickListener(){
+        @Override
+            public void onClick(View v){
+                /* Exit the Activity and Go Back */
+                finish();
+        }
+    };
+
+    Button.OnClickListener signupListener = new View.OnClickListener() {
         @Override
             public void onClick(View v) {
                 try {
@@ -56,7 +65,7 @@ public class signup extends login_page {
                     if (User_Name.getText().toString().equals("") || Password.getText().toString().equals("")) {
                         AlertDialog.Builder dlgAlert = new AlertDialog.Builder(signup.this);
 
-                        dlgAlert.setMessage("set a reasonable username and password");
+                        dlgAlert.setMessage("Set a reasonable UserName and Password");
                         dlgAlert.setTitle("Invalid Username or Password");
                         dlgAlert.setPositiveButton("OK", null);
                         dlgAlert.setCancelable(true);

@@ -23,6 +23,7 @@ public class login_page extends AppCompatActivity {
     Button gm_login;
     Button app_login;
     Button app_signup;
+    Button cancelButton;
     Toolbar toolbar;
     EditText User_Name;
     EditText Password;
@@ -34,12 +35,14 @@ public class login_page extends AppCompatActivity {
         fb_login = (Button) findViewById(R.id.fb_login);
         gm_login = (Button) findViewById(R.id.gm_login);
         app_login = (Button) findViewById(R.id.app_login);
+        cancelButton = (Button) findViewById(R.id.app_login_cancel_button);
         app_signup = (Button) findViewById(R.id.app_signup);
         User_Name = (EditText) findViewById(R.id.user_name);
         Password = (EditText) findViewById(R.id.password);
 
         toolbar.setTitle(R.string.app_name);
 //        toolbar.setBackgroundColor(Color.parseColor("#FF64FFB7"));
+        /* Inflate the Top Toolbar Menu */
         toolbar.inflateMenu(R.menu.login_menu);
 
         /**
@@ -140,10 +143,20 @@ public class login_page extends AppCompatActivity {
 
                     }
 
-
-
                 } catch (Exception e) {
                 String a = "hello";
+                }
+            }
+        });
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                try {
+                        /* Exit the App */
+                        finish();
+                } catch (Exception e) {
+
                 }
             }
         });
