@@ -3,8 +3,6 @@ package com.idea.meter.Startup_Pages;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -28,7 +26,6 @@ public class login_page extends AppCompatActivity {
     Toolbar toolbar;
     EditText User_Name;
     EditText Password;
-    FloatingActionButton fab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,9 +41,6 @@ public class login_page extends AppCompatActivity {
         toolbar.setTitle(R.string.app_name);
 //        toolbar.setBackgroundColor(Color.parseColor("#FF64FFB7"));
         toolbar.inflateMenu(R.menu.login_menu);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-
 
         /**
          * CRUD Operations
@@ -169,13 +163,6 @@ public class login_page extends AppCompatActivity {
             }
         });
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     @Override
